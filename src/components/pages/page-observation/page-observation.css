@@ -4,7 +4,7 @@
 ion-slides {
   width: 100%;
   max-width: 768px;
-  background-color: black;
+  background-color: transparent;
 }
 ion-slide {
   max-height: calc(100vh - 60px);
@@ -12,7 +12,8 @@ ion-slide {
   margin: auto;
 }
 .swiper-slide img {
-  width: -webkit-fill-available !important;
+  /*width: -webkit-fill-available !important;*/
+  width: 400px !important;
 }
 
 .contain {

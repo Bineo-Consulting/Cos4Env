@@ -1,7 +1,7 @@
 {
   "hosting": [{
     "public": "www",
-    "target": "cos4cloud",
+    "target": "cos4env",
     "cleanUrls": true,
     "ignore": [
       "firebase.json",

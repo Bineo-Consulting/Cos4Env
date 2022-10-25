@@ -293,7 +293,6 @@ export class PageDashboard {
           <span ref={(el) => this.charts.identificationsCountEl = (el as HTMLElement)} class="ct-chart ct-chart-counter"></span>
           <span ref={(el) => this.charts.usersCountEl = (el as HTMLElement)} class="ct-chart ct-chart-counter"></span>
 
-
           <div class="charts">
 
             <div class="cnt-header-chart">

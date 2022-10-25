@@ -1,5 +1,5 @@
 import { Component, Event, EventEmitter, Host, Prop, h } from '@stencil/core';
-import { GbifService } from '../../../services/gbif.service';
+// import { GbifService } from '../../../services/gbif.service';
 import { PlacesService } from '../../../services/places.service';
 import { fetchTranslations } from '../../../utils/translation';
 
@@ -28,27 +28,163 @@ export class AppSearch {
   params: any = {}
 
   origin: any = {
-    natusfera: 'false',
-    // ispot: 'false',
-    plantnet: 'false',
-    // artportalen: 'false',
-    gbif: 'false'
+    odourcollect: 'false',
+    canairio: 'false'
   }
   origins = Object.keys(this.origin) // hamelin
 
-  iconic_taxa: any = {}
+  type: any = {}
   types = [
-    {key: 'plantae', value: 'plantae', label: '🌿 Plantae'},
-    {key: 'arachnida', value: 'arachnida', label: '🕷 Arachnida'},
-    {key: 'mollusca', value: 'mollusca', label: '🦑 Mollusca'},
-    {key: 'insecta', value: 'insecta', label: '🐞 Insecta'},
-    {key: 'amphibia', value: 'amphibia', label: '🐸 Amphibia'},
-    {key: 'aves', value: 'aves', label: '🦆 Aves'},
-    {key: 'mammalia', value: 'mammalia', label: '🦁 Mammalia'},
-    {key: 'reptilia', value: 'reptilia', label: '🐍 Reptilia'},    
-    {key: 'actinopterygii', value: 'actinopterygii', label: '🐠 Actinopterygii'},
-    {key: 'animalia', value: 'animalia', label: '🐱 Animalia'},
-    {key: 'fungi' ,value: 'fungi', label: '🍄 Fungi'}      
+    {
+      label: 'Odour type',
+      key: 'Odour type',
+      value: 'Odour type',
+      items: [
+        "Other",
+        "Ammonia",
+        "Forest / Trees / Nature",
+        "Waste water",
+        "Alcohol",
+        "Chimney (burnt wood)",
+        "Organic fertilizers (manure/slurry)",
+        "Amines",
+        "Plastic",
+        "Chemical",
+        "Leachate",
+        "Bread / Cookies",
+        "Fresh waste",
+        "Flowers",
+        "Decomposed waste",
+        "No Odour",
+        "Rotten eggs",
+        "Fuel",
+        "Sewage",
+        "Urine",
+        "Oil / Petrochemical",
+        "Waste bin",
+        "Fresh grass",
+        "Sweat",
+        "Humidity / Wet soil",
+        "Cabbage soup",
+        "Traffic",
+        "Cocoa",
+        "Food",
+        "Wood",
+        "Animal feed",
+        "Glue / Adhesive",
+        "Sea",
+        "Sludge",
+        "Mint / Rosemary / Lavander",
+        "Asphalt / Rubber",
+        "Biogas",
+        "Gas",
+        "Metal",
+        "Perfume",
+        "Aroma / Flavour",
+        "Paint",
+        "Fruit",
+        "Bakeries",
+        "Fat / Oil",
+        "I don't know",
+        "Coffee",
+        "Cooked meat",
+        "Waste truck",
+        "Ammines",
+        "Fish",
+        "Ketone / Ester / Acetate / Ether",
+        "Dead animal",
+        "Animal food",
+        "Milk / Dairy",
+        "Sulphur",
+        "Malt / Hop",
+        "Biofilter",
+        "Raw meat",
+        "Chlorine",
+        "Leather"
+      ]
+    },
+    {
+      label: 'Odour intensity',
+      key: 'Odour intensity',
+      value: 'VDI 3882-1:1992 (odour intensity)',
+      items: ['Very weak', 'Extremely strong', 'Very strong', 'Weak', 'Strong', 'Noticeable']
+    },
+    {
+      label: 'Hedonic tone',
+      key: 'Hedonic tone',
+      value: 'VDI 3882-2:1994 (odour hedonic tone)',
+      items: [
+        "Slightly unpleasant",
+        "Extremely unpleasant",
+        "Extremely pleasant",
+        "Unpleasant",
+        "Very unpleasant",
+        "Neutral",
+        "Very pleasant",
+        "Pleasant",
+        "Slightly pleasant"
+      ]
+    },
+    {
+      label: 'PM1',
+      key: 'PM1',
+      value: 'PM1',
+      conditions: true
+    },
+    {
+      label: 'PM2.5',
+      key: 'PM2.5',
+      value: 'PM2.5',
+      conditions: true
+    },
+    {
+      label: 'PM10',
+      key: 'PM10',
+      value: 'PM10',
+      conditions: true
+    },
+    {
+      label: 'Temperature',
+      key: 'Temperature',
+      value: 'Temperature',
+      conditions: true
+    },
+    {
+      label: 'Humidity',
+      key: 'Humidity',
+      value: 'Humidity',
+      conditions: true
+    },
+    {
+      label: 'Pressure',
+      key: 'Pressure',
+      value: 'Pressure',
+      conditions: true
+    },
+    {
+      label: 'CO2',
+      key: 'CO2',
+      value: 'CO2',
+      conditions: true
+    },
+    {
+      label: 'CO2 Temperature',
+      key: 'CO2 Temperature',
+      value: 'CO2 Temperature',
+      conditions: true
+    },
+    {
+      label: 'CO2 Humidity',
+      key: 'CO2 Humidity',
+      value: 'CO2 Humidity',
+      conditions: true
+    },
+    {
+      label: 'Battery voltage',
+      key: 'Battery voltage',
+      value: 'Battery voltage',
+      conditions: true
+    }
   ]
 
   quality: any = {
@@ -93,11 +229,12 @@ export class AppSearch {
       })
       this.origin = {...this.origin}
 
-      const iconic_taxa = (this.query.iconic_taxa || '').split(',')
-      iconic_taxa.map(item => {
-        this.iconic_taxa[item] = 'true'
+      console.log({query: this.query})
+      const type = (this.query.type || '').split(',')
+      type.map(item => {
+        this.type[item] = 'true'
       })
-      this.iconic_taxa = {...this.iconic_taxa}
+      this.type = {...this.type}
 
       const quality_grade = (this.query.quality_grade || '').split(',')
       quality_grade.map(item => {
@@ -195,14 +332,13 @@ export class AppSearch {
   }
 
   onSearch() {
-    console.log([this.term, this.place, this.specie, this.term && !this.place && !this.specie])
     if (this.term && !this.place && !this.specie) {
       return this.presentAlert()
     }
-    const iconic_taxa = Object.keys(this.iconic_taxa).map(key => {
-      return this.iconic_taxa[key] === 'true' ? key : null
+    const type = Object.keys(this.type).map(key => {
+      return this.type[key] === 'true' ? key : null
     }).filter(Boolean)
-    this.params.iconic_taxa = iconic_taxa.length ? iconic_taxa.join(',') : null
+    this.params.type = type.length ? type.join(',') : null
 
     const origin = Object.keys(this.origin).map(key => {
       return this.origin[key] === 'true' ? key : null
@@ -235,13 +371,42 @@ export class AppSearch {
   }
 
   openFilters(key = 'all') {
-    const offl = this.refs[key].offsetLeft
-    this.filters[key].focus()
-    this.filters[key].style.left = `${offl}px`
+    console.log(Object.keys(this.filters))
+    Object.keys(this.filters).map(k => {
+      this.filters[k].blur()
+    })
+    if (key) {
+      const offl = this.refs[key].offsetLeft
+      this.filters[key].focus()
+      this.filters[key].style.left = `${offl}px`
+    }
   }
 
   onChecked(ev, key = null) {
-    if (key) {
+    if (key === 'type') {
+      const el = ev.detail
+      const [k, v] = el.value.split(':')
+      const isCond = v.includes('=') || v.includes('﹦') || v.includes('>') || v.includes('<')
+
+      if (isCond) {
+        setTimeout(() => {
+          const keyold = Object.keys(this[key]).find(i => i.includes(k))
+          delete this[key][keyold]
+          this[key][el.value] = el.checked ? 'true' : 'false'
+          this.setTitle()
+        }, 200)
+      } else if (v === '*') {
+        const keyold = Object.keys(this[key]).find(i => i.includes(k))
+        delete this[key][keyold]
+        this.type = {...this.type}
+        this.setTitle()
+      } else {
+        setTimeout(() => {
+          this[key][el.value] = el.checked ? 'true' : 'false'
+          this.setTitle()
+        }, 200)
+      }
+    } else if (key) {
       setTimeout(() => {
         const el = ev.detail
         this[key][el.value] = el.checked ? 'true' : 'false'
@@ -368,7 +533,10 @@ export class AppSearch {
     return Object.entries(this.origin).filter(([_, v]) => v === 'true').map(([k]) => k).filter(Boolean).join('+') || null
   }
   get typeTitle() {
-    return Object.entries(this.iconic_taxa).filter(([_, v]) => v === 'true').map(([k]) => k).filter(Boolean).join('+') || null
+    const len = Object.entries(this.type).filter(([_, v]) => v === 'true').map(([k]) => k).filter(Boolean).length
+    if (len) {
+      return `${this.i18n.filters.types} (${Object.entries(this.type).filter(([_, v]) => v === 'true').map(([k]) => k).filter(Boolean).length})` // Object.entries(this.type).filter(([_, v]) => v === 'true').map(([k]) => k).filter(Boolean).join('+') || null
+    } return null
   }
   get qualityTitle() {
     return Object.entries(this.quality).filter(([_, v]) => v === 'true').map(([k]) => this.i18n.filters[k]).filter(Boolean).join('+') || null
@@ -410,7 +578,6 @@ export class AppSearch {
 
   term: string = null
   onSearchValue(term) {
-    console.log('onSearchValue', {term})
     this.term = term.detail
   } 
 
@@ -441,8 +608,8 @@ export class AppSearch {
                 placeholder={this.i18n.filters.search}
                 onChoose={(e) => this.onSearchSelect(e)}
                 onSearchValue={(e) => this.onSearchValue(e)}
-                service={GbifService}
-                service2={PlacesService}></app-searchbar>
+                service={PlacesService}
+                service2={null}></app-searchbar>
 
               <div class="float-chips-wrappers">
                 {this.specie && <ion-chip>
@@ -465,22 +632,19 @@ export class AppSearch {
             <ion-col size="12" ref={e => this.refs.calendar = e}>
 
               <ion-chip
-                ref={(e) => this.refs.portals = e}
+                ref={e => this.refs.portals = e}
                 onClick={() => this.openFilters('portals')}>{this.portalTitle || this.i18n.filters.portals}</ion-chip>
               <ion-chip
-                ref={(e) => this.refs.types = e}
+                ref={e => this.refs.types = e}
                 onClick={() => this.openFilters('types')}>{this.typeTitle || this.i18n.filters.types}</ion-chip>
               <ion-chip
-                ref={(e) => this.refs.quality = e}
-                onClick={() => this.openFilters('quality')}>{this.qualityTitle || this.i18n.filters.quality}</ion-chip>
-              <ion-chip
-                ref={(e) => this.refs.licenses = e}
+                ref={e => this.refs.licenses = e}
                 onClick={() => this.openFilters('licenses')}>{this.licenseTitle || this.i18n.filters.licenses}</ion-chip>
 
               <ion-chip
-                ref={(e) => (this.refs.dateInput = e, this.onMouseDown())}
+                ref={e => (this.refs.dateInput = e, this.onMouseDown())}
                 onClick={() => this.onMouseDown()}
-                onMouseUp={(e) => this.onMouseUp(e)}>{this.i18n.filters.date}</ion-chip>
+                onMouseUp={e => this.onMouseUp(e)}>{this.i18n.filters.date}</ion-chip>
               <span ref={e => this.refs.dateContainer = e}></span>
 
             </ion-col>
@@ -502,15 +666,11 @@ export class AppSearch {
 
           <ion-row ref={(e) => this.filters.types = e} tabIndex="-1" className="center row-filters">
             <div class="row-filters-container">
-              <ion-list lines="none">
-                <ion-label>{this.i18n.filters.types}</ion-label>
-                {this.types.map(item => <ion-item>
-                  <ion-checkbox slot="start" value={item.value}
-                    checked={this.iconic_taxa[item.key]}
-                    onIonChange={(ev) => this.onChecked(ev, 'iconic_taxa')}></ion-checkbox>
-                  <ion-label>{item.label}</ion-label>
-                </ion-item>)}
-              </ion-list>
+              <app-list items={this.types}
+                type={this.type}
+                onChoose={ev => this.onChecked(ev, 'type')}
+                onClear={() => this.openFilters('types')}>
+              </app-list>
             </div>
           </ion-row>
 

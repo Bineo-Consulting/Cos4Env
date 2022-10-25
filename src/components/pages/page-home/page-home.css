@@ -12,6 +12,8 @@ header h1 {
   font-family: var(--ion-font-family);
   font-size: 6rem;
   text-align: center;
+  color: white;
+  text-shadow: 0 0 2px black;
 }
 h3 {
   font-size: var(--fz-h3);

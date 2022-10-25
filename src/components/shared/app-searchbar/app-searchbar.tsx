@@ -27,7 +27,6 @@ export class AppSearchbar {
   @State() itemsCache = JSON.parse(localStorage.search || '[]')
 
   async onInput(ev) {
-    console.log({onInput:(ev)})
     const term = ev.detail.value || ''
     if (term) {
       if (this.service2) {

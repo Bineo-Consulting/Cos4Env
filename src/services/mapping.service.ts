@@ -26,7 +26,7 @@ const parseCommentsDwc = (items) => {
 
 const nov2021 = new Date('2021-11-22').getTime()
 const parseDwc = (item) => {
-  item.origin = item.origin || 'Natusfera'
+  item.origin = item.origin || ''
   item.id = `${item.id}`.includes('-') ? item.id : `${item.origin.toLowerCase()}-${item.id}`
 
   item.$$photos = (item.media || item.photos || item.observation_photos || [])
@@ -57,7 +57,7 @@ const parseDwc = (item) => {
   item.longitud = item.decimalLongitud || item.decimalLongitud
   item.longitude = item.decimalLongitud || item.decimalLongitud
 
-  item.quality_grade = item.identificationVerificationStatus
+  item.quality_grade = item.type || item.identificationVerificationStatus
 
   item.taxon = item.taxon || {}
 
@@ -72,12 +72,15 @@ export class MappingService {
   static cache = JSON.parse(localStorage.cache || '{"time": 0}')
 
   static async get(params = null, cache = false) {
+    if (!params.origin) {
+      params.origin = 'odourcollect,canairio'
+    }
+    params.per_page = params.per_page || 2000
     const queryParams = params ? toQueryString(params) : ''
 
     if (cache && this.cache && this.cache.last && this.cache.time > Date.now() - 90 * 1000) {
       return this.cache.last.map(parseDwc)
     }
-    console.log(url + queryParams)
     return fetch(url + queryParams)
     .then(res => res.json())
     .then(items => {
@@ -92,8 +95,8 @@ export class MappingService {
   }
 
   static get getLastCache(): any[] {
-    if (MappingService.cache.time > Date.now() - 90 * 1000)
-      return MappingService.cache.last ? MappingService.cache.last.map(parseDwc) : []
+    if (MappingService.cache.time > Date.now() - 90 * 1000 )
+      return MappingService.cache.last && MappingService.cache.last.length ? MappingService.cache.last.map(parseDwc) : []
     else return []
   }
 
@@ -101,9 +104,7 @@ export class MappingService {
     return fetch(`${url}/${id}`)
     .then(res => res.json())
     .then(res => {
-      console.log('host.includes', url)
       if (url.includes('/dwc')) {
-        console.log('dwc', parseDwc(res))
         return parseDwc(res)
       } else {
         if (res.origin && res.origin.toLowerCase() === 'ispot') {
@@ -162,12 +163,6 @@ export class MappingService {
     item.$$date = timeAgo(item.created_at)
     item.$$species_name = item.species_name || (item.taxon || {}).name || 'Something...'
     item.origin = item.origin || 'Natusfera'
-    // item.$$comments = []
-    // (item.comments || []).map(comment => {
-    //   const c = {...comment}
-    //   c.$$date = timeAgo(c.created_at)
-    //   return c
-    // }).sort((a:any, b:any) => Date.parse(a.created_at) - Date.parse(b.created_at))
     item.$$comments = [...(item.identifications || []), ...(item.comments || [])]
     .filter(i => i.user_id !== 1)
     .map(identification => {

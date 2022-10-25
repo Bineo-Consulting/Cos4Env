@@ -117,7 +117,7 @@ export class AppRoot {
         }, {
           text: 'Feedback',
           value: 'feedback',
-          href: 'https://ug8wvluhfv1.typeform.com/to/J6YaWmzG'
+          href: 'https://ug8wvluhfv1.typeform.com/to/TIPX8IWK'
         }, {
           text: this.i18n.menu.settings,
           value: 'settings'

@@ -1,0 +1,23 @@
+:host {
+  display: block;
+}
+
+ion-slides, ion-slide {
+  width: 250px;
+  display: block !important;
+}
+ion-slide, ion-slides {
+  background: white;
+}
+ion-checkbox {
+  margin: 10px;
+}
+ion-list {
+  overflow-y: auto;
+  max-height: 440px;
+}
+select {
+  border: 0;
+  line-height: 26px;
+  height: 26px;
+}
