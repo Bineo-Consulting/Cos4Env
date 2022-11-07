@@ -31,7 +31,7 @@ export class PageLogin {
   }
 
   authenix() {
-    const clientId = 'da1a7d48-bca9-321b-dd04-ece7d7afc7b6'
+    const clientId = 'a55d6976-a46c-3989-97a4-a958936b480a'
     const redirect = encodeURIComponent(location.origin).replace(/\/$/, '')
     const path = location.pathname
     const url = `https://www.authenix.eu/oauth/authorize?response_type=token id_token&client_id=${clientId}&redirect_uri=${redirect}&state=${path}&nonce=123&prompt=select_account`
@@ -51,12 +51,40 @@ export class PageLogin {
           </h2>
         </header>
         <main class="modal__content modal-login-content" id="modal-login-content">
+
+          {/*<div class="login-rrss">
+            <ion-button>Facebook</ion-button>
+            <ion-button>Google</ion-button>
+          </div>*/}
+
+{/*          <ion-item>
+            <ion-label position="stacked">{this.i18n.login.user}</ion-label>
+            <ion-input
+              onIonChange={(ev) => this.login = ev.detail.value}
+              name="login" type="login"></ion-input>
+          </ion-item>
+          <ion-item>
+            <p position="stacked">{this.i18n.login.password} <a href="https://www.authenix.eu/" target="_blank">https://www.authenix.eu/</a></p>
+            <ion-input
+              onIonChange={(ev) => this.password = ev.detail.value}
+              name="password" type="password"></ion-input>
+          </ion-item>*/}
           <p class="center">{this.i18n.login.message} <a href="https://www.authenix.eu/" target="_blank">https://www.authenix.eu/</a></p>
           <br/>
+
+          {/*<ion-button onClick={() => this.signin()}>{this.i18n.login.login}</ion-button>*/}
 
           <ion-button onClick={() => this.authenix()}>
             Login
           </ion-button>
+
+          {/*<p>or</p>
+          <div class="login-organization">
+            <input type="text" id="organization" name="organization" placeholder="Type your organization name ..."/>
+          </div>
+          <div class="cant-login">
+            <p>Can't log in?</p><a href="#">Ask here</a>
+          </div>*/}
 
         </main>
       </Host>

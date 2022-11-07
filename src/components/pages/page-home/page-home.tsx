@@ -21,7 +21,7 @@ export class PageHome {
     this.i18n = await fetchTranslations(this.i18n)
 
     if (!(this.items && this.items.length)) {
-      MappingService.get({ map: true })
+      MappingService.get({map: true})
       .then((res) => {
         this.items = res
       })
@@ -47,8 +47,10 @@ export class PageHome {
             <app-search onSearch={(ev) => this.search(ev.detail)}></app-search>
           </div>
         </header>
-        {/*<app-grid title={this.i18n.last_obersations} items={this.items} images={this.images}></app-grid>*/}
-        <page-map items={this.items} interactions={true}></page-map>
+        <page-map
+          items={this.items}
+          interactions={false}>
+        </page-map>
         <app-footer></app-footer>
       </Host>
     );

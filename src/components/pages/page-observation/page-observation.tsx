@@ -4,31 +4,6 @@ import { MappingService } from '../../../services/mapping.service';
 import { GbifService } from '../../../services/gbif.service';
 import { fetchTranslations } from '../../../utils/translation';
 
-const keys = []
-function objInspect(obj: any) { 
-  const items = Object.entries(obj)
-  .map((i: any) => {
-    const index = keys.findIndex(key => key === i[0])
-    i[2] = index >= 0 ? (index + 1) : 100
-    return i
-  }).sort((a, b) => {
-    return a[2] - b[2]
-  })
-  .map(([key, val]) => {
-    return (<ion-row>
-      <ion-col size="4">
-        <span>{key}</span>
-      </ion-col>
-      <ion-col size="8">
-        {key === 'status' ? <ion-chip>{val}</ion-chip> : val}
-      </ion-col>
-    </ion-row>)
-  })
-  return <ion-grid>
-    {items}
-  </ion-grid>
-}
-
 @Component({
   tag: 'page-observation',
   styleUrl: 'page-observation.css',
@@ -84,8 +59,6 @@ export class PageObservation {
 
   loading: any;
   checked = false
-  measurements: any[] = []
-
   async componentWillLoad() {
     this.checked = false
 
@@ -94,12 +67,10 @@ export class PageObservation {
     this.specie = ''
     this.body = ''
     this.item = MappingService.getCache(this.id)
-    this.measurements = (this.item.measurements || []).map(i => objInspect(i))
     this.loading = this.presentLoading()
     MappingService.getById(this.id)
     .then((res) => {
       this.item = res
-      this.measurements = (this.item.measurements || []).map(i => objInspect(i))
       const comments = [...res.$$identifications, ...this.comments]
       this.comments = comments.sort((a:any, b:any) => Date.parse(a.created_at) - Date.parse(b.created_at))
       this.loadingDismiss()
@@ -198,12 +169,6 @@ export class PageObservation {
       if (this.item.id.includes('gbif')) {
         return `https://www.gbif.org/occurrence/${id}`
       }
-      if (this.item.id.includes('canairio')) {
-        return `http://api.canair.io:8080/dwc/stations/${id}`
-      }
-      if (this.item.id.includes('odourcollect')) {
-        return `https://odourcollect.eu/api/odor/${id}`
-      }
       return `https://natusfera.org/observations/${id}`
     }
     return '#'
@@ -234,10 +199,10 @@ export class PageObservation {
                 <ion-icon size="small" name="pricetag-outline"></ion-icon>
                 <p>{ this.item.identifications_count || 0 }</p>
               </div>
-              {/*<div>
+              <div>
                 <ion-icon size="small" name="images-outline"></ion-icon>
                 <p>{ this.item.observation_photos_count || 0 }</p>
-              </div>*/}
+              </div>
             </div>
             <div class="origin">
               <ion-icon size="small" name="earth-outline"></ion-icon>
@@ -252,34 +217,6 @@ export class PageObservation {
             </div>}
           </div>
         </div>
-
-        {this.item && <div class="contain cnt-text">
-          <h1>Measurements</h1>
-          <ion-grid>
-            <ion-row>
-              <ion-col size="4">
-                Type
-              </ion-col>
-              <ion-col size="4">
-                Date
-              </ion-col>
-              <ion-col size="4">
-                Value
-              </ion-col>
-            </ion-row>
-            {(this.item.measurements || []).map(item => (<ion-row>
-              <ion-col size="4">
-                {item.measurementUnit}
-              </ion-col>
-              <ion-col size="4">
-                {item.measurementDeterminedDate}
-              </ion-col>
-              <ion-col size="4">
-                {item.measurementValue}
-              </ion-col>
-            </ion-row>))}
-          </ion-grid>
-        </div>}
 
         <div class="contain">
           

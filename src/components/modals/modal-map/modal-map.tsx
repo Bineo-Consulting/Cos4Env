@@ -76,8 +76,8 @@ export class ModalMap {
   render() {
     return (
       <Host>
-        <ion-fab-button color="light" onClick={this.close} class="close-btn" size="small">
-          <ion-icon color="primary" name="close"></ion-icon>
+        <ion-fab-button onClick={this.close} class="close-btn" size="small">
+          <ion-icon name="close"></ion-icon>
         </ion-fab-button>
         <div class="map" ref={(el) => this.el = el}></div>
       </Host>

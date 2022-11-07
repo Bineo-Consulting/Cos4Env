@@ -81,6 +81,9 @@ main {
   height: calc(100vh - 58px);
   overflow: auto;
 }
+main.\/observations {
+  overflow: hidden;
+}
 ion-icon {
   font-size: 24px;
   padding: 0 5px;
@@ -101,6 +104,7 @@ nav .menu ion-icon {
   background-attachment: local, local, scroll, scroll;
   background-size: 100% 27px, 100% 27px, 100% 9px, 100% 9px;*/
 }
+
 
 .avatar.avatar-lg {
   font-size: 1.2rem;
@@ -141,8 +145,13 @@ video {
   top: 0;
   left: 0;
 }
+// .bg-video.\/ {
+//   background-image:  url(/assets/valley-day/Valley-day.svg);
+//   background-size: auto 115%;
+//   background-position: center;
+// }
 .bg-video.\/ {
-  background-image:  url(/assets/hero/hero.svg);
+  background-image: url(/assets/hero/hero.svg);
   background-size: auto 115%;
   background-position: center;
 }

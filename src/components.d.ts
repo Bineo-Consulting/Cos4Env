@@ -24,10 +24,6 @@ export namespace Components {
         "showSpinner": boolean;
         "title": string;
     }
-    interface AppList {
-        "items": any[];
-        "type": any;
-    }
     interface AppMultiselect {
     }
     interface AppProfile {
@@ -129,12 +125,6 @@ declare global {
     var HTMLAppGridElement: {
         prototype: HTMLAppGridElement;
         new (): HTMLAppGridElement;
-    };
-    interface HTMLAppListElement extends Components.AppList, HTMLStencilElement {
-    }
-    var HTMLAppListElement: {
-        prototype: HTMLAppListElement;
-        new (): HTMLAppListElement;
     };
     interface HTMLAppMultiselectElement extends Components.AppMultiselect, HTMLStencilElement {
     }
@@ -262,7 +252,6 @@ declare global {
         "app-download": HTMLAppDownloadElement;
         "app-footer": HTMLAppFooterElement;
         "app-grid": HTMLAppGridElement;
-        "app-list": HTMLAppListElement;
         "app-multiselect": HTMLAppMultiselectElement;
         "app-profile": HTMLAppProfileElement;
         "app-root": HTMLAppRootElement;
@@ -304,12 +293,6 @@ declare namespace LocalJSX {
         "onLoadmore"?: (event: CustomEvent<any>) => void;
         "showSpinner"?: boolean;
         "title"?: string;
-    }
-    interface AppList {
-        "items"?: any[];
-        "onChoose"?: (event: CustomEvent<any>) => void;
-        "onClear"?: (event: CustomEvent<any>) => void;
-        "type"?: any;
     }
     interface AppMultiselect {
     }
@@ -390,7 +373,6 @@ declare namespace LocalJSX {
         "app-download": AppDownload;
         "app-footer": AppFooter;
         "app-grid": AppGrid;
-        "app-list": AppList;
         "app-multiselect": AppMultiselect;
         "app-profile": AppProfile;
         "app-root": AppRoot;
@@ -422,7 +404,6 @@ declare module "@stencil/core" {
             "app-download": LocalJSX.AppDownload & JSXBase.HTMLAttributes<HTMLAppDownloadElement>;
             "app-footer": LocalJSX.AppFooter & JSXBase.HTMLAttributes<HTMLAppFooterElement>;
             "app-grid": LocalJSX.AppGrid & JSXBase.HTMLAttributes<HTMLAppGridElement>;
-            "app-list": LocalJSX.AppList & JSXBase.HTMLAttributes<HTMLAppListElement>;
             "app-multiselect": LocalJSX.AppMultiselect & JSXBase.HTMLAttributes<HTMLAppMultiselectElement>;
             "app-profile": LocalJSX.AppProfile & JSXBase.HTMLAttributes<HTMLAppProfileElement>;
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;

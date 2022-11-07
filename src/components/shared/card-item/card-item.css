@@ -36,14 +36,13 @@ a:active {
 .card-item .cnt-img {
   width: 20rem;
   height: calc(20rem * 3 / 4);
-  /*background: url(/assets/svg/img.jpg);*/
+  background: url(/assets/svg/img.jpg);
   background-size: contain;
 }
 .card-item .cnt-img img {
-  width: 80%;
+  width: 20rem;
   height: 100%;
-  margin: auto;
-  display: block;
+  object-fit: cover;
 }
 .card-item .cnt-text {
   padding: 10px;

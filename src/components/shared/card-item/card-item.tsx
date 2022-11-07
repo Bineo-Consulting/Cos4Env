@@ -34,10 +34,10 @@ export class CardItem {
                     <ion-icon size="small" name="pricetag-outline"></ion-icon>
                     <p>{ this.item.identifications_count || 0 }</p>
                   </div>
-{/*                  <div>
+                  <div>
                     <ion-icon size="small" name="images-outline"></ion-icon>
                     <p>{ this.item.observation_photos_count || 0 }</p>
-                  </div>*/}
+                  </div>
                 </div>
                 <div class="origin">
                   <ion-icon size="small" name="globe-outline"></ion-icon>

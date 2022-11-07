@@ -1,7 +1,9 @@
-import { Component, Event, EventEmitter, Host, Prop, h } from '@stencil/core';
-// import { GbifService } from '../../../services/gbif.service';
+import { Component, Event, EventEmitter, Host, Prop, h, State } from '@stencil/core';
+import { GbifService } from '../../../services/gbif.service';
 import { PlacesService } from '../../../services/places.service';
 import { fetchTranslations } from '../../../utils/translation';
+import { types as odourTypes } from '../../../services/odourcollect.service';
+import { types as canairioTypes } from '../../../services/canairio.service';
 
 @Component({
   tag: 'app-search',
@@ -14,6 +16,12 @@ export class AppSearch {
   @Prop({mutable: true}) place: string;
   @Prop() query: any;
   @Event() search: EventEmitter<any>;
+
+  slides: any = {}
+  slideOpts = {
+    allowSlideNext: false,
+    allowSlidePrev: false
+  }
 
   i18n: any = {};  
   title: {[key: string]: string} = {
@@ -31,160 +39,16 @@ export class AppSearch {
     odourcollect: 'false',
     canairio: 'false'
   }
-  origins = Object.keys(this.origin) // hamelin
+  origins = Object.keys(this.origin)
+  originLabels: any = {
+    odourcollect: 'OdourCollect',
+    canairio: 'CanAirIO'
+  }
 
-  type: any = {}
+  iconic_taxa: any = {}
   types = [
-    {
-      label: 'Odour type',
-      key: 'Odour type',
-      value: 'Odour type',
-      items: [
-        "Other",
-        "Ammonia",
-        "Forest / Trees / Nature",
-        "Waste water",
-        "Alcohol",
-        "Chimney (burnt wood)",
-        "Organic fertilizers (manure/slurry)",
-        "Amines",
-        "Plastic",
-        "Chemical",
-        "Leachate",
-        "Bread / Cookies",
-        "Fresh waste",
-        "Flowers",
-        "Decomposed waste",
-        "No Odour",
-        "Rotten eggs",
-        "Fuel",
-        "Sewage",
-        "Urine",
-        "Oil / Petrochemical",
-        "Waste bin",
-        "Fresh grass",
-        "Sweat",
-        "Humidity / Wet soil",
-        "Cabbage soup",
-        "Traffic",
-        "Cocoa",
-        "Food",
-        "Wood",
-        "Animal feed",
-        "Glue / Adhesive",
-        "Sea",
-        "Sludge",
-        "Mint / Rosemary / Lavander",
-        "Asphalt / Rubber",
-        "Biogas",
-        "Gas",
-        "Metal",
-        "Perfume",
-        "Aroma / Flavour",
-        "Paint",
-        "Fruit",
-        "Bakeries",
-        "Fat / Oil",
-        "I don't know",
-        "Coffee",
-        "Cooked meat",
-        "Waste truck",
-        "Ammines",
-        "Fish",
-        "Ketone / Ester / Acetate / Ether",
-        "Dead animal",
-        "Animal food",
-        "Milk / Dairy",
-        "Sulphur",
-        "Malt / Hop",
-        "Biofilter",
-        "Raw meat",
-        "Chlorine",
-        "Leather"
-      ]
-    },
-    {
-      label: 'Odour intensity',
-      key: 'Odour intensity',
-      value: 'VDI 3882-1:1992 (odour intensity)',
-      items: ['Very weak', 'Extremely strong', 'Very strong', 'Weak', 'Strong', 'Noticeable']
-    },
-    {
-      label: 'Hedonic tone',
-      key: 'Hedonic tone',
-      value: 'VDI 3882-2:1994 (odour hedonic tone)',
-      items: [
-        "Slightly unpleasant",
-        "Extremely unpleasant",
-        "Extremely pleasant",
-        "Unpleasant",
-        "Very unpleasant",
-        "Neutral",
-        "Very pleasant",
-        "Pleasant",
-        "Slightly pleasant"
-      ]
-    },
-    {
-      label: 'PM1',
-      key: 'PM1',
-      value: 'PM1',
-      conditions: true
-    },
-    {
-      label: 'PM2.5',
-      key: 'PM2.5',
-      value: 'PM2.5',
-      conditions: true
-    },
-    {
-      label: 'PM10',
-      key: 'PM10',
-      value: 'PM10',
-      conditions: true
-    },
-    {
-      label: 'Temperature',
-      key: 'Temperature',
-      value: 'Temperature',
-      conditions: true
-    },
-    {
-      label: 'Humidity',
-      key: 'Humidity',
-      value: 'Humidity',
-      conditions: true
-    },
-    {
-      label: 'Pressure',
-      key: 'Pressure',
-      value: 'Pressure',
-      conditions: true
-    },
-    {
-      label: 'CO2',
-      key: 'CO2',
-      value: 'CO2',
-      conditions: true
-    },
-    {
-      label: 'CO2 Temperature',
-      key: 'CO2 Temperature',
-      value: 'CO2 Temperature',
-      conditions: true
-    },
-    {
-      label: 'CO2 Humidity',
-      key: 'CO2 Humidity',
-      value: 'CO2 Humidity',
-      conditions: true
-    },
-    {
-      label: 'Battery voltage',
-      key: 'Battery voltage',
-      value: 'Battery voltage',
-      conditions: true
-    }
+    ...odourTypes(),
+    ...canairioTypes()
   ]
 
   quality: any = {
@@ -218,6 +82,7 @@ export class AppSearch {
     maxEventDate: null
   }
 
+  @State() type = {}
 
   async componentWillLoad() {
     this.i18n = await fetchTranslations(this.i18n)
@@ -229,18 +94,18 @@ export class AppSearch {
       })
       this.origin = {...this.origin}
 
-      console.log({query: this.query})
-      const type = (this.query.type || '').split(',')
-      type.map(item => {
-        this.type[item] = 'true'
-      })
-      this.type = {...this.type}
-
-      const quality_grade = (this.query.quality_grade || '').split(',')
-      quality_grade.map(item => {
-        this.quality[item] = 'true'
-      })
-      this.quality = {...this.quality}
+      if (this.query.type) {
+        this.query.type.split(',')
+        .map(i => {
+          const [key, val] = i.split(':')
+          this.type[key] ||= {}
+          this.type[key][val] = true
+          const item = this.types.find(item => item.key === key)
+          item.count ||= 0
+          item.count += 1
+        })
+        this.type = { ...this.type }
+      }
 
       const licenses = (this.query.license || '').split(',')
       licenses.map(item => {
@@ -251,7 +116,7 @@ export class AppSearch {
       this.date.minEventDate = this.query.minEventDate || null
       this.date.maxEventDate = this.query.maxEventDate || null
 
-      this.specie = this.query.scientificName || null
+      // this.specie = this.query.scientificName || null
       this.place = this.query.place || null
     }
   }
@@ -335,10 +200,14 @@ export class AppSearch {
     if (this.term && !this.place && !this.specie) {
       return this.presentAlert()
     }
-    const type = Object.keys(this.type).map(key => {
-      return this.type[key] === 'true' ? key : null
-    }).filter(Boolean)
-    this.params.type = type.length ? type.join(',') : null
+
+    this.params.type = Object.keys(this.type)
+    .filter(key => this.type[key] && Object.keys(this.type[key]).length)
+    .map(tipe => {
+      return Object.keys(this.type[tipe]).map(key => {
+        return `${tipe}:${key}`
+      }).join(',') || null
+    }).filter(Boolean).join(',') || null
 
     const origin = Object.keys(this.origin).map(key => {
       return this.origin[key] === 'true' ? key : null
@@ -350,20 +219,6 @@ export class AppSearch {
     }).filter(Boolean)
     this.params.license = license.length ? license.join(',') : null
 
-    const quality = Object.keys(this.quality).map(key => {
-      return this.quality[key] === 'true' ? key : null
-    }).filter(Boolean)
-
-    this.params.quality_grade = [
-      quality.includes('casual') ? 'casual' : null,
-      quality.includes('research') ? 'research' : null
-    ].filter(Boolean).join(',') || null
-
-    this.params.has = [
-      quality.includes('geo') ? 'geo' : null,
-      quality.includes('photos') ? 'photos' : null
-    ].filter(Boolean).join(',') || null
-
     this.params.minEventDate = this.date.minEventDate || null
     this.params.maxEventDate = this.date.maxEventDate || null
 
@@ -371,41 +226,40 @@ export class AppSearch {
   }
 
   openFilters(key = 'all') {
-    console.log(Object.keys(this.filters))
-    Object.keys(this.filters).map(k => {
-      this.filters[k].blur()
-    })
-    if (key) {
-      const offl = this.refs[key].offsetLeft
-      this.filters[key].focus()
-      this.filters[key].style.left = `${offl}px`
+    const offl = this.refs[key].offsetLeft
+    this.filters[key].focus()
+    this.filters[key].style.left = `${offl}px`
+
+    if (key === 'types') {
+      this.selectionBack()
     }
   }
 
-  onChecked(ev, key = null) {
+  onChecked(ev, key = null, item = null) {
     if (key === 'type') {
       const el = ev.detail
-      const [k, v] = el.value.split(':')
-      const isCond = v.includes('=') || v.includes('﹦') || v.includes('>') || v.includes('<')
-
-      if (isCond) {
-        setTimeout(() => {
-          const keyold = Object.keys(this[key]).find(i => i.includes(k))
-          delete this[key][keyold]
-          this[key][el.value] = el.checked ? 'true' : 'false'
-          this.setTitle()
-        }, 200)
-      } else if (v === '*') {
-        const keyold = Object.keys(this[key]).find(i => i.includes(k))
-        delete this[key][keyold]
-        this.type = {...this.type}
-        this.setTitle()
+      if (el.checked) {
+        if (this.conditions) {
+          this.type[this.selection.key] = {[item]: true}
+        } else {
+          this.type[this.selection.key] ||= {}
+          this.type[this.selection.key][item] = true
+        }
+        const found = this.types.find(item => item.key === this.selection.key)
+        found.count = Object.keys(this.type[this.selection.key] || {}).length
+        this.types = [...this.types]
       } else {
-        setTimeout(() => {
-          this[key][el.value] = el.checked ? 'true' : 'false'
-          this.setTitle()
-        }, 200)
+        if (this.conditions) {
+          delete this.type[this.selection.key]
+        } else {
+          delete this.type[this.selection.key][item]
+        }
+        const found = this.types.find(item => item.key === this.selection.key)
+        found.count = Object.keys(this.type[this.selection.key] || {}).length
+        this.types = [...this.types]
       }
+      this.type = { ...this.type }
+      this.setTitle()
     } else if (key) {
       setTimeout(() => {
         const el = ev.detail
@@ -533,10 +387,12 @@ export class AppSearch {
     return Object.entries(this.origin).filter(([_, v]) => v === 'true').map(([k]) => k).filter(Boolean).join('+') || null
   }
   get typeTitle() {
-    const len = Object.entries(this.type).filter(([_, v]) => v === 'true').map(([k]) => k).filter(Boolean).length
-    if (len) {
-      return `${this.i18n.filters.types} (${Object.entries(this.type).filter(([_, v]) => v === 'true').map(([k]) => k).filter(Boolean).length})` // Object.entries(this.type).filter(([_, v]) => v === 'true').map(([k]) => k).filter(Boolean).join('+') || null
-    } return null
+    const aux = []
+    Object.keys(this.type)
+    .filter(i => this.type[i] && Object.keys(this.type[i]).length)
+    .map(key => aux.push(...Object.keys(this.type[key])))
+    const count = aux.length
+    return count ? `${this.i18n.filters.types} (${count})` : null
   }
   get qualityTitle() {
     return Object.entries(this.quality).filter(([_, v]) => v === 'true').map(([k]) => this.i18n.filters[k]).filter(Boolean).join('+') || null
@@ -554,12 +410,11 @@ export class AppSearch {
       else this.refs.portals && this.refs.portals.classList.remove('active')
     }
     const type = this.typeTitle
-    if (type !== this.title.type) {
-      this.title.type = type
-      this.refs.types.innerHTML = this.title.type || this.i18n.filters.types
-      if (type) this.refs.types && this.refs.types.classList.add('active')
-      else this.refs.types && this.refs.types.classList.remove('active')
-    }
+    this.title.type = type
+    this.refs.types.innerHTML = this.title.type || this.i18n.filters.types
+    if (type) this.refs.types && this.refs.types.classList.add('active')
+    else this.refs.types && this.refs.types.classList.remove('active')
+
     const quality = this.qualityTitle
     if (quality !== this.title.quality) {
       this.title.quality = quality
@@ -574,6 +429,30 @@ export class AppSearch {
       if (license) this.refs.licenses && this.refs.licenses.classList.add('active')
       else this.refs.licenses && this.refs.licenses.classList.remove('active')
     }
+  }
+
+  @State() selection = null
+  async selectCategory(type) {
+    this.selection = type
+    const selection = this.types.find(e => e.key === this.selection.key)
+    setTimeout(() => this.filters.types.focus(), 500)
+
+    this.conditions = null
+    this.condition = null
+    this.conditions = selection.condition || null
+    this.checkCurrentCondition()
+
+    await this.slides.lockSwipes(false)
+    await this.slides.slideTo(1)
+    await this.slides.lockSwipes(true)
+  }
+
+  async selectionBack() {
+    this.selection = null
+    setTimeout(() => this.filters.types.focus(), 500)
+    await this.slides.lockSwipes(false)
+    await this.slides.slideTo(0)
+    await this.slides.lockSwipes(true)
   }
 
   term: string = null
@@ -596,6 +475,101 @@ export class AppSearch {
     console.log('onDidDismiss resolved with role', role);
   }
 
+  @State() condition: any = null
+  @State() conditions = null
+
+  onConditionChange(t) {
+    if (t && t.target.value) {
+      if (this.condition) {
+        this.condition.label = t.target.value,
+        this.condition = Object.assign({}, this.condition)
+      } else {
+        this.condition = {
+          label: t.target.value
+        }
+      }
+      this.onChecked(
+        {
+          detail: { checked: true }
+        },
+        'type',
+        this.switchCondition(this.condition)
+      )
+    } else {
+      this.onChecked(
+        {
+          detail: { checked: false }
+        },
+        'type',
+        this.switchCondition(this.condition)
+      )
+      this.condition = null
+    }
+  }
+
+  checkCurrentCondition() {
+    if (this.conditions && this.selection && this.type[this.selection.key]) {
+      const current = this.type[this.selection.key]
+
+      const operator = Object.keys(current)[0]
+
+      const i = operator.replaceAll("﹦", "=").split(/(\>=|\<=|=)/).filter(Boolean);
+      this.condition = 4 === i.length ? {
+        label: "beetween",
+        value: i[1],
+        value2: i[3]
+      } : {
+        label: this.operator(i[0]),
+        value: i[1]
+      }
+    } else {
+      this.condition = null
+    }
+  }
+
+  switchCondition(t) {
+    if ("equal" === t.label) {
+      return "﹦" + (t.value || "")
+    }
+    if ("greater_than" === t.label) {
+      return ">﹦" + (t.value || "")
+    }
+    if ("less_than" === t.label) {
+      return "<﹦" + (t.value || "")
+    }
+    if ("between" === t.label) {
+      return `>﹦${t.value || ""}<﹦${t.value2 || ""}`
+    }
+    return ''
+  }
+
+  operator(t) {
+    return "﹦" === t || "=" === t ? "equal" : ">=" === t || ">﹦" === t ? "greater_than" : "<=" === t || "<﹦" === t ? "less_than" : void 0
+  }
+
+  onChange(t) {
+    if (this.condition) {
+      if (t && t.target) {
+        if ("value" === t.target.name) {
+          this.condition.value = t.target.value
+        }
+        if ("value2" === t.target.name) {
+          this.condition.value2 = t.target.value
+        }
+      }
+    }
+
+    if (this.condition && this.condition.label) {
+      this.onChecked(
+        {
+          detail: { checked: true }
+        },
+        'type',
+        this.switchCondition(this.condition)
+      )
+    }
+  }
+
   render() {
     return (
       <Host>
@@ -608,16 +582,16 @@ export class AppSearch {
                 placeholder={this.i18n.filters.search}
                 onChoose={(e) => this.onSearchSelect(e)}
                 onSearchValue={(e) => this.onSearchValue(e)}
-                service={PlacesService}
-                service2={null}></app-searchbar>
+                service={GbifService}
+                service2={PlacesService}></app-searchbar>
 
               <div class="float-chips-wrappers">
                 {this.specie && <ion-chip>
-                  <ion-label>{this.specie}</ion-label>
+                  <ion-label class="capitalize">{this.specie}</ion-label>
                   <ion-icon onClick={_ => this.cleanSpecie()} name="close-circle"></ion-icon>
                 </ion-chip>}
                 {this.place && <ion-chip>
-                  <ion-label>{this.place}</ion-label>
+                  <ion-label class="capitalize">{this.place}</ion-label>
                   <ion-icon onClick={_ => this.cleanPlace()} name="close-circle"></ion-icon>
                 </ion-chip>}
               </div>
@@ -632,19 +606,21 @@ export class AppSearch {
             <ion-col size="12" ref={e => this.refs.calendar = e}>
 
               <ion-chip
-                ref={e => this.refs.portals = e}
+                ref={(e) => this.refs.portals = e}
                 onClick={() => this.openFilters('portals')}>{this.portalTitle || this.i18n.filters.portals}</ion-chip>
+
               <ion-chip
-                ref={e => this.refs.types = e}
+                ref={(e) => this.refs.types = e}
                 onClick={() => this.openFilters('types')}>{this.typeTitle || this.i18n.filters.types}</ion-chip>
+
               <ion-chip
-                ref={e => this.refs.licenses = e}
+                ref={(e) => this.refs.licenses = e}
                 onClick={() => this.openFilters('licenses')}>{this.licenseTitle || this.i18n.filters.licenses}</ion-chip>
 
               <ion-chip
-                ref={e => (this.refs.dateInput = e, this.onMouseDown())}
+                ref={(e) => (this.refs.dateInput = e, this.onMouseDown())}
                 onClick={() => this.onMouseDown()}
-                onMouseUp={e => this.onMouseUp(e)}>{this.i18n.filters.date}</ion-chip>
+                onMouseUp={(e) => this.onMouseUp(e)}>{this.i18n.filters.date}</ion-chip>
               <span ref={e => this.refs.dateContainer = e}></span>
 
             </ion-col>
@@ -653,12 +629,12 @@ export class AppSearch {
           <ion-row ref={(e) => this.filters.portals = e} tabIndex="-1" className="center row-filters">
             <div class="row-filters-container">
               <ion-list lines="none">
-                <ion-label>{this.i18n.filters.portals}</ion-label>
+                <ion-label class="capitalize">{this.i18n.filters.portals}</ion-label>
                 {this.origins.map(origin => <ion-item>
                   <ion-checkbox slot="start" value={origin}
                     checked={this.origin[origin]}
                     onIonChange={(ev) => this.onChecked(ev, 'origin')}></ion-checkbox>
-                  <ion-label>{origin}</ion-label>
+                  <ion-label>{this.originLabels[origin]}</ion-label>
                 </ion-item>)}
               </ion-list>
             </div>
@@ -666,37 +642,76 @@ export class AppSearch {
 
           <ion-row ref={(e) => this.filters.types = e} tabIndex="-1" className="center row-filters">
             <div class="row-filters-container">
-              <app-list items={this.types}
-                type={this.type}
-                onChoose={ev => this.onChecked(ev, 'type')}
-                onClear={() => this.openFilters('types')}>
-              </app-list>
-            </div>
-          </ion-row>
+              <ion-slides ref={e => this.slides = e || e.lockSwipes(true)} options={this.slideOpts}>
+                <ion-slide>
+                  <ion-list lines="none">
+                    {this.types.map(item => (
+                      <ion-item class="item-label" onClick={() => this.selectCategory(item)}>
+                        <ion-label class="capitalize">{item.count ? `(${item.count}) ` : ''}{item.label} →</ion-label>
+                      </ion-item>
+                    ))}
+                  </ion-list>
+                </ion-slide>
+                <ion-slide>
+                  <ion-item onClick={() => this.selectionBack()}>
+                    <ion-icon name="chevron-back-sharp"></ion-icon>
+                    <ion-title>{this.selection?.key}</ion-title>
+                  </ion-item>
+                  {this.selection && this.selection.items && <ion-list>
 
-          <ion-row ref={(e) => this.filters.quality = e} tabIndex="-1" className="center row-filters">
-            <div class="row-filters-container">
-              <ion-list lines="none">
-                <ion-label>{this.i18n.filters.quality}</ion-label>
-                {this.qualities.map(item => <ion-item>
-                  <ion-checkbox slot="start" value={item.value}
-                    checked={this.quality[item.key]}
-                    onIonChange={(ev) => this.onChecked(ev, 'quality')}></ion-checkbox>
-                  <ion-label>{this.i18n.filters[item.key]}</ion-label>
-                </ion-item>)}
-              </ion-list>
+                    {this.selection.items.map(item => <ion-item lines="none">
+                      <ion-checkbox
+                        onIonChange={(e) => this.onChecked(e, 'type', item)}
+                        slot="start"
+                        checked={this.type[this.selection.key] && this.type[this.selection.key][item]}
+                        value={item}>
+                      </ion-checkbox>
+                      <ion-label class="capitalize">{item}</ion-label>
+                    </ion-item>)}
+                  </ion-list>}
+
+                  {this.selection?.condition && <ion-list lines="none">
+                    <ion-item>
+                      <ion-label>Condition</ion-label>
+                      <select class="select"
+                        onChange={_ => this.onConditionChange(_)}>
+                        <option value="">--</option>
+                        <option selected={this.condition && this.condition.label === "equal"} value="equal">Equal</option>
+                        <option selected={this.condition && this.condition.label === "less_than"} value="less_than">Less than</option>
+                        <option selected={this.condition && this.condition.label === "greater_than"} value="greater_than">Greater than</option>
+                        <option selected={this.condition && this.condition.label === "between"} value="between">Between</option>
+                      </select>
+                    </ion-item>
+                    {this.condition && this.condition.label && <ion-item>
+                      {this.condition && <ion-label class="capitalize">{this.condition.label}</ion-label>}
+                      <ion-input class="input" placeholder="0" name="value"
+                        value={this.condition.value}
+                        onIonChange={e => this.onChange(e)}></ion-input>
+                    </ion-item>}
+                    {
+                      this.condition && this.condition.label === "between" &&
+                        <ion-item>
+                          <ion-label>And</ion-label>
+                          <ion-input class="input" placeholder="0" name="value2"
+                            value={this.condition.value2}
+                            onIonChange={e => this.onChange(e)}></ion-input>
+                        </ion-item>
+                    }
+                  </ion-list>}
+                </ion-slide>
+              </ion-slides>  
             </div>
           </ion-row>
 
           <ion-row ref={(e) => this.filters.licenses = e} tabIndex="-1" className="center row-filters">
             <div class="row-filters-container">
               <ion-list lines="none">
-                <ion-label>{this.i18n.filters.licenses}</ion-label>
+                <ion-label class="capitalize">{this.i18n.filters.licenses}</ion-label>
                 {this.licenses.map(item => <ion-item>
                   <ion-checkbox slot="start" value={item.value}
                     checked={this.license[item.key]}
                     onIonChange={(ev) => this.onChecked(ev, 'license')}></ion-checkbox>
-                  <ion-label>{item.label}</ion-label>
+                  <ion-label class="capitalize">{item.label}</ion-label>
                 </ion-item>)}
               </ion-list>
             </div>

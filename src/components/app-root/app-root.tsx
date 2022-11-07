@@ -133,7 +133,7 @@ export class AppRoot {
         }, {
           text: 'Feedback',
           value: 'feedback',
-          href: 'https://ug8wvluhfv1.typeform.com/to/J6YaWmzG'
+          href: 'https://ug8wvluhfv1.typeform.com/to/TIPX8IWK'
         }, {
           text: 'Dashboard',
           value: 'dashboard'
@@ -286,9 +286,6 @@ export class AppRoot {
   render() {
     return (
       <div class={"bg-video " + this.location.pathname} onScroll={e => this.onScroll(e)}>
-        {/*<video playsinline autoplay muted loop poster="/assets/valley-day/Valley-day.png" id="bgvid">
-          <source src="/assets/valley-day/Valley-day.mp4" type="video/mp4"/>
-        </video>*/}
 
         <nav class={this.location.pathname} ref={e => this.nav = e} role="navigation">
           <div class="logo">
@@ -321,7 +318,10 @@ export class AppRoot {
           </ul>
         </nav>
 
-        <main ref={e => this.main = e} class="shadow-scroll" onScroll={e => this.onScroll(e)}>
+        <main
+          ref={e => this.main = e}
+          class={"shadow-scroll " + this.location.pathname}
+          onScroll={e => this.onScroll(e)}>
           <stencil-router>
             <stencil-route-switch scrollTopOffset={0}>
               <stencil-route url="/" component="page-home" exact={true} />

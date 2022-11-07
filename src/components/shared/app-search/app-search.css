@@ -23,6 +23,10 @@ ion-checkbox {
   overflow: hidden;
   top: 0;
 }
+/*.row-filters.active {
+  height: max-content;
+  overflow: visible;
+}*/
 .row-filters-container {
   display: flex;
   box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%);
@@ -40,7 +44,7 @@ ion-checkbox {
 .row-filters:focus {
   outline: none;
 }
-ion-label {
+ion-label.capitalize {
   text-transform: capitalize;
 }
 ion-searchbar, ion-button {
@@ -58,6 +62,11 @@ ion-chip.active {
 }
 ion-list.lite ion-checkbox {
   margin: 8px;
+}
+
+ion-list {
+  overflow-y: auto;
+  max-height: 440px;
 }
 
 .clean {
@@ -1050,6 +1059,26 @@ input {
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 80px;
+}
+
+ion-slide, ion-slides {
+  background: white;
+}
+ion-slides, ion-slide {
+  width: 250px;
+  display: block !important;
+}
+
+.select {
+  border: 0px;
+  line-height: 26px;
+  height: 26px;
+}
+.input {
+  display: inline !important;
+  --border-width: 0;
+  border-width: 0;
+  max-width: calc(100% - 5px);
 }
 
 @media (min-width:350px) and (max-width:380px) {
