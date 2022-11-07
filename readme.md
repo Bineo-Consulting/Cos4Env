@@ -1,22 +1,8 @@
-# Cos4Bio - Expert Portal
+# Cos4Env - Environmental Portal
 
 ## What is Cos4Cloud:
 
 Cos4Cloud is H2020 European Project, and one of their service is a Platform that allow to the experts to Find, Access, Reuse and Interoperate with observations from differentes Citizen Observatories, following the FAIR rules in terms to integrate in the future in the best way in the EOSC environment. 
-
-## What is Cos4Bio:
-
-## What are the Biodiversty CO envolved?
-
-- ArtPortalen: https://www.artportalen.se/
-
-- iSpot: https://www.ispotnature.org/
-
-- Natusfera: https://natusfera.org 
-
-- PlantNet: https://plantnet.org/
-
-And we hope that in the near future more Biodiversity CO could integrate in this service.
 
 ## What are the Environmental CO envolved?
 
@@ -41,7 +27,7 @@ and Enjoy!!
 
 ## Init with Firebase Framework
 ### front-end
-```cd cos4cloud-frontend```
+```cd cos4env-frontend```
 ```npm start```
 
 ### backend
@@ -51,7 +37,7 @@ and Enjoy!!
 
 ## Init with Raw Node
 ### front-end
-```cd cos4cloud-frontend```
+```cd cos4env-frontend```
 ```HOST=http://localhost:10010/api npm start```
 
 ### backend
