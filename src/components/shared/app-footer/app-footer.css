@@ -15,7 +15,7 @@ footer a {
   font-weight: bold;
 }
 footer a.link {
-  color: var(--c-0);
+  color: black;
   font-weight: bold;
   text-decoration: underline;
 }
