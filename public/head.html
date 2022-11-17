@@ -1,197 +1,228 @@
-<style>
-  @font-face {
-    font-family: "Gilroy";
-    src: url(/assets/gilroy-extrabold-webfont.woff2);
-    font-weight: bold;
-  }
-  @font-face {
-    font-family: "Gilroy";
-    src: url(/assets/gilroy-light-webfont.woff2);
-    font-weight: normal;
-  }
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Cos4Env</title>
+  <meta name="referrer" content="no-referrer-when-downgrade" />
 
-  * {
-    box-sizing: border-box;
-  }
+  <meta name="description" content="Welcome to Cos4Env!">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+  <meta name="theme-color" content="#16161d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="x-ua-compatible" content="IE=Edge">
 
-  html,
-  body {
-    max-width: 960px;
-    margin: 2% auto;
-    margin-top: 4em;
-    padding: 0;
-    width: 100vw;
-  }
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Cos4Env">
+  <meta property="og:description" content="Welcome to Cos4Env!">
+  <meta property="og:image" content="https://cos4cloud-eosc.eu/wp-content/uploads/2020/07/iStock-1180187740_crop.jpg">
 
-  html {
-    font-size: 62.5%;
-  }
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:title" content="Cos4Env">
+  <meta property="twitter:description" content="Welcome to Cos4Env!">
+  <meta property="twitter:image" content="https://cos4cloud-eosc.eu/wp-content/uploads/2020/07/iStock-1180187740_crop.jpg">
+  <link rel="canonical" href="https://cos4env.eu"/>
 
-  body {
-    font-size: 1.6rem;
-    color: var(--c-1);
-    font-family: var(--main-font);
-  }
+  <link rel="apple-touch-icon" href="/assets/icon/favicon-cos4env-v3.svg">
+  <link rel="icon" type="image/x-icon" href="/assets/icon/favicon-cos4env-v3.svg">
+  <link rel="manifest" href="/manifest.json">
+  <style>
+    @font-face {
+      font-family: "Gilroy";
+      src: url(/assets/gilroy-extrabold-webfont.woff2);
+      font-weight: bold;
+    }
+    @font-face {
+      font-family: "Gilroy";
+      src: url(/assets/gilroy-light-webfont.woff2);
+      font-weight: normal;
+    }
 
-  :root {
-    /* fonts */
-    --main-font: "Gilroy", "Roboto", sans-serif;
-    --sub-font: "Roboto", sans-serif;
-    --fz-h1: 4rem;
-    --fz-h2: 4rem;
-    --fz-h3: 3rem;
-    --fz-h4: 2.3rem;
-    --fz-h5: 1.8rem;
-    --fz-h6: 1.6rem;
-    --fz-p: 1.6rem;
-    --fz-a: 1.6rem;
-    --fz-btn: 1.6rem;
-    /* colors */
-    --c-0: #fff;
-    --c-1: #222;
-    --c-2: #028559;
-    --c-3: #fff;
-    --c-4: #525252;
+    * {
+      box-sizing: border-box;
+    }
 
-    /* IONIC */
-    --ion-font-family: var(--main-font), inherit;
-    --ion-color-primary: #525252;
-    --ion-color-primary-rgb: 98, 98, 98;
-    --ion-color-primary-contrast: #fff;
-    --ion-color-primary-contrast-rgb: 255, 255, 255;
-    --ion-color-primary-shade: #727272;
-    --ion-color-primary-tint: #525252;
-  }
+    html,
+    body {
+      max-width: 960px;
+      margin: 2% auto;
+      margin-top: 4em;
+      padding: 0;
+      width: 100vw;
+    }
 
-  // TEXT
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    -webkit-font-smoothing: antialiased;
-  }
-  h1 {
-    font-size: var(--fz-h1);
-  }
-  h2 {
-    font-size: var(--fz-h2);
-  }
-  h3 {
-    font-size: var(--fz-h3);
-    margin: 0.5rem 0;
-    white-space: normal;
-  }
-  h4 {
-    font-size: var(--fz-h4);
-  }
-  h5 {
-    font-size: var(--fz-h5);
-    margin: 0;
-  }
-  h6 {
-    font-size: var(--fz-h6);
-    margin: 0;
-  }
-  a {
-    font-size: var(--fz-a);
-    text-decoration: none;
-    color: var(--c-2);
-    font-weight: bold;
-  }
-  img {
-    width:  100%;
-  }
+    html {
+      font-size: 62.5%;
+    }
 
-  nav {
-    position: fixed;
-    left: 0;
-    top: 0;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
-    width:  100%;
+    body {
+      font-size: 1.6rem;
+      color: var(--c-1);
+      font-family: var(--main-font);
+    }
 
-    background-color: var(--c-3);
-    display: flex;
-    flex-flow: wrap;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 0rem 1rem 2rem;
-  }
-  nav .logo img {
-    width: 16rem;
-    height: auto;
-  }
-  nav ul {
-    list-style: none;
-    margin: 0;
-    display: flex;
-    flex-flow: wrap;
-    align-items: center;
-    justify-content: space-between;
-  }
-  nav ul li {
-    display: flex;
-  }
-  nav ul li.language {
-    position: relative;
-    margin-right: 0.5rem;
-    z-index: 23;
-  }
-  nav ul li.menu {
-    position: relative;
-    margin-left: 1rem;
-    margin-right: 1rem;
-    z-index: 23;
-  }
+    :root {
+      /* fonts */
+      --main-font: "Gilroy", "Roboto", sans-serif;
+      --sub-font: "Roboto", sans-serif;
+      --fz-h1: 4rem;
+      --fz-h2: 4rem;
+      --fz-h3: 3rem;
+      --fz-h4: 2.3rem;
+      --fz-h5: 1.8rem;
+      --fz-h6: 1.6rem;
+      --fz-p: 1.6rem;
+      --fz-a: 1.6rem;
+      --fz-btn: 1.6rem;
+      /* colors */
+      --c-0: #fff;
+      --c-1: #222;
+      --c-2: #028559;
+      --c-3: #fff;
+      --c-4: #525252;
 
-  nav ul li.user a {
-    cursor: pointer;
-  }
-  nav ul li a {
-    text-decoration: none;
-    line-height: 5.5rem;
-    height: 100%;
-    display: flex;
-    flex-flow: wrap;
-    align-items: center;
-    font-family: var(--sub-font);
-    position: relative;
-    z-index: 8899;
-  }
-  nav ul li a img.icon-arrow {
-    height: auto;
-    width: 1.5rem;
-    margin-left: 0.8rem;
-  }
-  nav ul li a img.icon-user {
-    width: 4rem;
-    height: 4rem;
-    margin-left: 0.8rem;
-  }
-  nav ul li a img.icon-notifications {
-    width: 2.5rem;
-    height: 2.5rem;
-  }
+      /* IONIC */
+      --ion-font-family: var(--main-font), inherit;
+      --ion-color-primary: #525252;
+      --ion-color-primary-rgb: 98, 98, 98;
+      --ion-color-primary-contrast: #fff;
+      --ion-color-primary-contrast-rgb: 255, 255, 255;
+      --ion-color-primary-shade: #727272;
+      --ion-color-primary-tint: #525252;
+    }
 
-  nav a:hover img {
-    transform: scale(0.95);
-  }
-  pre {
-    text-align: center;
-    margin: auto;
-  }
-  iframe {
-    width: 100%;
-    max-width: 768px;
-    max-height: 500px;
-    height: 100%;
-  }
+    // TEXT
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      -webkit-font-smoothing: antialiased;
+    }
+    h1 {
+      font-size: var(--fz-h1);
+    }
+    h2 {
+      font-size: var(--fz-h2);
+    }
+    h3 {
+      font-size: var(--fz-h3);
+      margin: 0.5rem 0;
+      white-space: normal;
+    }
+    h4 {
+      font-size: var(--fz-h4);
+    }
+    h5 {
+      font-size: var(--fz-h5);
+      margin: 0;
+    }
+    h6 {
+      font-size: var(--fz-h6);
+      margin: 0;
+    }
+    a {
+      font-size: var(--fz-a);
+      text-decoration: none;
+      color: var(--c-2);
+      font-weight: bold;
+    }
+    img {
+      width:  100%;
+    }
 
-</style>
+    nav {
+      position: fixed;
+      left: 0;
+      top: 0;
+      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+      width:  100%;
+
+      background-color: var(--c-3);
+      display: flex;
+      flex-flow: wrap;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0rem 1rem 2rem;
+    }
+    nav .logo img {
+      width: 16rem;
+      height: auto;
+    }
+    nav ul {
+      list-style: none;
+      margin: 0;
+      display: flex;
+      flex-flow: wrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+    nav ul li {
+      display: flex;
+    }
+    nav ul li.language {
+      position: relative;
+      margin-right: 0.5rem;
+      z-index: 23;
+    }
+    nav ul li.menu {
+      position: relative;
+      margin-left: 1rem;
+      margin-right: 1rem;
+      z-index: 23;
+    }
+
+    nav ul li.user a {
+      cursor: pointer;
+    }
+    nav ul li a {
+      text-decoration: none;
+      line-height: 5.5rem;
+      height: 100%;
+      display: flex;
+      flex-flow: wrap;
+      align-items: center;
+      font-family: var(--sub-font);
+      position: relative;
+      z-index: 8899;
+    }
+    nav ul li a img.icon-arrow {
+      height: auto;
+      width: 1.5rem;
+      margin-left: 0.8rem;
+    }
+    nav ul li a img.icon-user {
+      width: 4rem;
+      height: 4rem;
+      margin-left: 0.8rem;
+    }
+    nav ul li a img.icon-notifications {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+
+    nav a:hover img {
+      transform: scale(0.95);
+    }
+    pre {
+      text-align: center;
+      margin: auto;
+    }
+    iframe {
+      width: 100%;
+      max-width: 768px;
+      max-height: 500px;
+      height: 100%;
+    }
+
+  </style>
+</head>
+<body>
 <nav role="navigation">
   <div class="logo">
-    <a class="link-active" href="/"><img src="/assets/icon/logo.svg" alt="Bineo logo" /></a>
+    <a class="link-active" href="/"><img src="/assets/icon/logo-env-final.svg" alt="Bineo logo" /></a>
   </div>
   <ul class="desktop-menu">
     <li class="language pcssc-dropdown"><ion-icon role="img" class="md hydrated" aria-label="globe outline" name="globe-outline"></ion-icon></li>
