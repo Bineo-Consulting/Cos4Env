@@ -1,5 +1,5 @@
 {
-  "home_title": "Alle biodiversiteit<br/>waarnemingen op één plek",
+  "home_title": "Alle milieudossiers<br/>waarnemingen op één plek",
   "observations": "waarnemingen",
   "last_obersations": "Laatste waarnemingen",
   "need_login": "Je moet inloggen",
@@ -66,51 +66,51 @@
   },
   "stats": {
     "comments_identi": "Opmerkingen en identificaties",
-    "all": "All",
-    "comm_id_by_portal": "% Comments & Identifications by Portal",
-    "downloads": "Download",
-    "downloads_reasons": "% Download reasons"
+    "all": "allemaal",
+    "comm_id_by_portal": "% Opmerkingen en identificaties per portaal",
+    "downloads": "downloaden",
+    "downloads_reasons": "% Redenen downloaden"
   },
   "download": {
-    "download_title": "Download",
-    "download_title_modal": "Select  your download reason(s):",
-    "download_history": "Download history",
-    "format": "Format",
-    "re_run": "Re-run",
-    "view": "View"
+    "download_title": "downloaden",
+    "download_title_modal": "Selecteer uw downloadreden(en):",
+    "download_history": "Geschiedenis downloaden",
+    "format": "Formaat",
+    "re_run": "Opnieuw uitvoeren",
+    "view": "Visie"
   },
   "downloads_reasons_type": {
-    "biosecurity management/planning": "Biosecurity management/planning",
-    "citizen science": "Citizen Science",
-    "collection management": "Collection management",
-    "conservation management/planning": "Conservation management/planning",
-    "ecological research": "Ecological research",
-    "education": "Education",
-    "environmental assessment": "Environmental assessment",
-    "restoration/remediation": "Retoration/Remediation",
-    "scientific research": "Scientific investigation",
-    "systematic research/taxonomy": "Systematic research/taxonomy",
-    "species modelling": "Species modeling",
-    "testing": "Test",
-    "other": "Other"
+    "biosecurity management/planning": "Beheer/planning van bioveiligheid",
+    "citizen science": "Burgerwetenschap",
+    "collection management": "Beheer van collecties",
+    "conservation management/planning": "Beheer/planning van natuurbehoud",
+    "ecological research": "Ecologisch onderzoek",
+    "education": "Opleiding",
+    "environmental assessment": "Milieubeoordeling",
+    "restoration/remediation": "Herstel/sanering",
+    "scientific research": "Wetenschappelijk onderzoek",
+    "systematic research/taxonomy": "Systematisch onderzoek/taxonomie",
+    "species modelling": "Modellering van soorten",
+    "testing": "Testen",
+    "other": "Ander"
   },
   "comments": {
-    "comments": "Comments",
-    "identification": "Identifications",
-    "type_comment": "Write your comments...",
-    "add_identification": "Send",
-    "has_identified": "Identified observation",
-    "add_comment_identification": "Add comment/identification",
-    "help": " (Need help)",
-    "someone": "Someone"
+    "comments": "Opmerkingen",
+    "identification": "Identificaties",
+    "type_comment": "Schrijf uw opmerkingen...",
+    "add_identification": "Versturen",
+    "has_identified": "Geïdentificeerde observatie",
+    "add_comment_identification": "Voeg commentaar/identificatie toe",
+    "help": " (Hulp nodig)",
+    "someone": "Iemand"
   },
   "footer": {
-    "about": "About",
-    "help": "Help",
-    "privacy": "Privacy Policy",
-    "term": "Terms of Service",
+    "about": "Over",
+    "help": "Helpen",
+    "privacy": "Privacybeleid",
+    "term": "Servicevoorwaarden",
     "contact": "Contact",
-    "follow_us": "Follow us:",
-    "h2020": "This project has received funding from the European Union’s Horizon 2020 Research and Innovation Programme under Grant Agreement No 863463"
+    "follow_us": "Volg ons:",
+    "h2020": "Dit project heeft financiering ontvangen van het Horizon H2020 Research and Innovation Program van de Europese Unie onder overeenkomst nr. 863463"
   }
 }

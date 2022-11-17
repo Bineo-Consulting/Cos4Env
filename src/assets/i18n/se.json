@@ -1,5 +1,5 @@
 {
-  "home_title": "All observationer av<br/>biologisk mångfald på ett ställe",
+  "home_title": "Alla miljöregister<br/>på ett ställe",
   "observations": "fynd",
   "last_obersations": "Senaste fynd",
   "need_login": "Du måste vara inloggad",
@@ -111,6 +111,6 @@
     "term": "Användarvillkor",
     "contact": "Kontakt",
     "follow_us": "Följ oss:",
-    "h2020": "This project has received funding from the European Union’s Horizon 2020 Research and Innovation Programme under Grant Agreement No 863463"
+    "h2020": "Detta projekt har erhållit medel från Horizon H2020 Research and Innovation Program of the European Union under avtal nr 863463"
   }
 }

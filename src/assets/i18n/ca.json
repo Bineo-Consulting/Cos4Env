@@ -1,5 +1,5 @@
 {
-  "home_title": "Totes les observacions<br/>de biodiversitat en un sol lloc",
+  "home_title": "Tots els registres<br/>mediambientals en únic lloc",
   "observations": "observacions",
   "last_obersations": "Darrera observació",
   "need_login": "Cal que inicieu la sessió",
@@ -110,5 +110,7 @@
     "term": "Condicions del servei",
     "contact": "Contacte",
     "follow_us": "Segueix-nos:"
+    "h2020": "Aquest projecte ha rebut fons de Programa Horizon H2020 de Recerca i Innovació de la Unió Europea sota l‟Acord No 863463"
+
   }
 }

@@ -1,5 +1,5 @@
 {
-  "home_title": "Tutte le osservazioni sulla biodiversità<br/>in un unico luogo",
+  "home_title": "Tutti i record ambientali<br/>in un unico luogo",
   "observations": "osservazioni",
   "last_obersations": "Ultime osservazioni",
   "need_login": "È necessario eseguire l'accesso",
@@ -111,6 +111,6 @@
     "term": "Termini di Servizio",
     "contact": "Contatti",
     "follow_us": "Seguici su:",
-    "h2020": "This project has received funding from the European Union’s Horizon 2020 Research and Innovation Programme under Grant Agreement No 863463"
+    "h2020": "Questo progetto ha ricevuto fondi dal programma di ricerca e innovazione Horizon H2020 dell'Unione europea ai sensi dell'accordo n. 863463"
   }
 }
