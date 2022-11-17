@@ -17,63 +17,9 @@ import AnimatedCluster from 'ol-ext/layer/AnimatedCluster'
 import SelectCluster from 'ol-ext/interaction/SelectCluster'
 import Popup from 'ol-ext/overlay/Popup'
 
-// import convexHull from 'ol-ext/geom/ConvexHull'
-// import Circle from 'ol/style/Circle';
-// import { Pointer } from 'ol/interaction';
-// import {Icon, Style} from 'ol/style';
-// import { Style } from 'ol/style';
-// import Polygon from 'ol/geom/Polygon'
-
 import {Vector as VectorLayer} from 'ol/layer';
 import { MappingService } from '../../../services/mapping.service';
 
-// // Addfeatures to the cluster
-// function addFeatures(map, clusterSource, nb) {
-//   var ext = map.getView().calculateExtent(map.getSize());
-//   var features = [];
-//   for (let i = 0; i< nb; ++i) {
-//     features[i]= new Feature(new Point([ext[0]+(ext[2]-ext[0])*Math.random(), ext[1]+(ext[3]-ext[1])*Math.random()]));
-//     features[i].set('id',i);
-//   }
-//   clusterSource.getSource().clear();
-//   clusterSource.getSource().addFeatures(features);
-// }
-
-// Style for the clusters
-// var styleCache = {};
-// function getStyle2 (feature) {
-//   var size = feature.get('features').length;
-//   var style = styleCache[size];
-//   if (!style) {
-//     const color = size>25 ? "192,0,0" : size>8 ? "255,128,0" : "0,128,0";
-//     const radius = Math.max(8, Math.min(size*0.75, 20));
-//     // const _dash: any = 2*Math.PI*radius/6;
-//     // var dash = [ 0, _dash, _dash, _dash, _dash, _dash, _dash ];
-//     style = styleCache[size] = new Style({
-//       image: new Circle({
-//         radius: radius,
-//         stroke: new Stroke({
-//           color: "rgba("+color+",0.5)", 
-//           width: 15 ,
-//           // lineDash: dash,
-//           // lineCap: "butt"
-//         }),
-//         fill: new Fill({
-//           color:"rgba("+color+",1)"
-//         })
-//       }),
-//       text: new Text({
-//         text: size.toString(),
-//         //font: 'bold 12px comic sans ms',
-//         //textBaseline: 'top',
-//         fill: new Fill({
-//           color: '#fff'
-//         })
-//       })
-//     });
-//   }
-//   return style;
-// }
 const styleCache = {};
 function getStyle(t) {
   let size = t.get("features").length
@@ -82,7 +28,6 @@ function getStyle(t) {
     const t = size > 25 ? "192,0,0" : size > 8 ? "255,128,0" : "0,128,0"
     const o = Math.max(8, Math.min(.75 * size, 20));
 
-    console.log({o})
     style = styleCache[size] = new Style({
       image: new Circle({
         radius: o,
@@ -106,10 +51,37 @@ function getStyle(t) {
   return [style]
 }
 
-const Kt = (t, e, i) => {
-  const o = `\n  <b>ID: </b>${i.id}</br>\n  <b><ion-icon size="small" name="time-outline"></ion-icon> </b>${i.$$date}<br>\n  <ion-icon size="small" name="globe-outline"></ion-icon><span class="origin-name">${i.origin}</span><br>\n  <img class="icon-type" src="${i.medium_url}"/><br/>\n\n  <h1>Measurements</h1>\n  <ion-grid>\n    <ion-row>\n      <ion-col size="6">\n        <b>Type</b>\n      </ion-col>\n      <ion-col size="6">\n        <b>Value</b>\n      </ion-col>\n    </ion-row>\n    ${(i.measurements || []).map(t=>`\n      <ion-row>\n        <ion-col size="6">\n          ${t.measurementUnit || t.measurementType}\n        </ion-col>\n        <ion-col size="6">\n          ${t.measurementValue}\n        </ion-col>\n      </ion-row>`).join("")}\n  </ion-grid>\n  `;
-  console.log({t, e, o})
-  t.show(e, o)
+const showPopup = (popup, coordinates, item) => {
+  const content = `
+  <b>ID: </b>${item.id}</br>
+  <b><ion-icon size="small" name="time-outline"></ion-icon> </b>${item.$$date}<br>
+  <ion-icon size="small" name="globe-outline"></ion-icon>
+  <span class="origin-name">${item.origin}</span><br>
+  <ion-icon class="comments" size="small" name="chatbubbles-outline"></ion-icon>
+  <span class="comments origin-name">Comments (${item.comments_count})</span><br>
+  <img class="icon-type" src="${item.medium_url}"/><br/>
+
+  <h1>Measurements</h1>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6">
+        <b>Type</b>
+      </ion-col>
+      <ion-col size="6">
+        <b>Value</b>
+      </ion-col>
+    </ion-row>
+    ${(item.measurements || []).map(t=>`
+      <ion-row>
+        <ion-col size="6">
+          ${t.measurementUnit || t.measurementType}
+        </ion-col>
+        <ion-col size="6">
+          ${t.measurementValue}
+        </ion-col>
+      </ion-row>`).join("")}
+  </ion-grid>`
+  popup.show(coordinates, content)
 }
 
 function addFeatures(t, e) {
@@ -177,7 +149,7 @@ export class PageMap {
     this.process(this.map)
 
 
-    const popup = new Popup()
+    const popup: any = new Popup()
     this.popup = popup
     this.map.addOverlay(popup)
 
@@ -186,23 +158,34 @@ export class PageMap {
       if (e && !0 === e.values_.selectclusterfeature) {
         const [o] = e.values_.features
         const n = this.items.find(t=>t.id === o.id);
-        MappingService.getById(n.id).then(e=>{
-          Kt(popup, t.coordinate, e)
-        }
-        ),
-        Kt(popup, t.coordinate, n)
+        MappingService.getById(n.id).then(e => {
+          showPopup(popup, t.coordinate, e)
+        })
+        showPopup(popup, t.coordinate, n)
+        this.popupEvents(popup, n.id)
       } else if (e && 1 === e.values_.features.length) {
         const [o] = e.values_.features
         const n = this.items.find(t=>t.id === o.id);
 
         MappingService.getById(n.id).then(e=>{
-          Kt(popup, t.coordinate, e)
+          showPopup(popup, t.coordinate, e)
         })
-        Kt(popup, t.coordinate, n)
+        showPopup(popup, t.coordinate, n)
+        this.popupEvents(popup, n.id)
       } else {
         this.popup.hide()
       }
     })
+  }
+
+  popupEvents(popup, id) {
+    setTimeout(() => {
+      popup.content.querySelectorAll('.comments').forEach(node => {
+        node.addEventListener('click', () => {
+          this.openComments(id)
+        }, true)
+      })
+    }, 500)
   }
 
   clusterSource: any
@@ -321,13 +304,42 @@ export class PageMap {
 
   @Watch('items')
   onItems() {
-    console.log({
-      items: this.items
-    })
     addFeatures(this.items, this.clusterSource)
   }
   componentDidLoad() {
-    setTimeout(()=> this.loadMap(), 400)
+    setTimeout(() => this.loadMap(), 400)
+  }
+
+  comments: any[]
+  async openComments(id) {
+    const [origin, idx] = id.split('-')
+    this.comments = await MappingService.getComments(idx, origin)
+    .then(comments => {
+      return comments.sort((a:any, b:any) => Date.parse(a.created_at) - Date.parse(b.created_at))
+    })
+    const modalElement: any = document.createElement('ion-modal');
+    modalElement.component = 'modal-comments';
+    modalElement.id = 'modal-comments'
+    modalElement.componentProps = {
+      id,
+      item: { id },
+      items: this.comments,
+      callback: (that, item) => this.renderComments(that, {
+        item,
+        items: this.comments,
+      })
+    }
+
+    // present the modal
+    document.body.appendChild(modalElement);
+    modalElement.present();
+    await modalElement.onWillDismiss()
+  }
+
+  renderComments(that, data) {
+    that.items = [...data.items, data.item]
+    // modalElement.componentProps.items = [...data.items, data.item]
+    // modalElement.componentProps = {...modalElement.componentProps}
   }
 
   render() {

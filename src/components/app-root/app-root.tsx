@@ -83,7 +83,7 @@ export class AppRoot {
     const user = JSON.parse(localStorage.user)
     localStorage.removeItem('user')
     const url = 'https://www.authenix.eu/oauth/logout' + toQueryString({
-      client_id: 'a55d6976-a46c-3989-97a4-a958936b480a',
+      client_id: 'da1a7d48-bca9-321b-dd04-ece7d7afc7b6',
       code: '',
       token: user.access_token,
       token_type_hint: 'access_token',
@@ -201,6 +201,7 @@ export class AppRoot {
       body: JSON.stringify({
         user: {
           ...res,
+          provider: 'cos4env',
           access_token
         }
       })
@@ -267,7 +268,6 @@ export class AppRoot {
   }
 
   openProfile() {
-    // location.href = (`/users/${this.user.sub || this.user.name || this.user.login}`)
     this.history.push(`/users/${this.user.sub || this.user.name || this.user.login}`, {})
   }
 
@@ -290,14 +290,13 @@ export class AppRoot {
         <nav class={this.location.pathname} ref={e => this.nav = e} role="navigation">
           <div class="logo">
             <stencil-route-link url="/">
-              <img src="/assets/icon/logo.svg" alt="Bineo logo"/>
+              <img src="/assets/icon/logo-env-final.svg" alt="Bineo logo"/>
             </stencil-route-link>
           </div>
 
           <ul class="desktop-menu">
             <li class="language pcssc-dropdown" onClick={(ev) => this.openLanguages(ev)}>
               <ion-icon name="globe-outline"></ion-icon>
-              {/*<img class="icon-arrow" src="/assets/svg/arrow.svg" alt="arrow"/>*/}
             </li>
             <li class="user">
               <a>

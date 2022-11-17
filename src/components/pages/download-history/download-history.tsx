@@ -36,6 +36,7 @@ export class DownloadHistory {
 
     fetch(url, { headers: {
       sub,
+      provider: 'cos4env',
       sort: 'desc'
     } })
     .then(res => res.json())

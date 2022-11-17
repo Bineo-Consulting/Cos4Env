@@ -33,7 +33,7 @@
 }
 .cnt-header-chart {
   width: 100%;
-  height: 2rem;
+  height: 4rem;
   /*padding: 0 2rem;*/
   display: flex;
   flex-flow: wrap;
@@ -290,7 +290,7 @@ span.ct-label {
 .chart-bar .ct-legend {
   padding: 10px 10px 10px 50px;
   border-radius: 6px;
-  top: 139%;
+  top: 146%;
   border: 1px solid;
   left: calc(50% - 130px);
   list-style: none;

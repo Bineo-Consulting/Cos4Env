@@ -36,8 +36,8 @@ export class AppSearch {
   params: any = {}
 
   origin: any = {
-    odourcollect: 'false',
-    canairio: 'false'
+    odourcollect: false,
+    canairio: false
   }
   origins = Object.keys(this.origin)
   originLabels: any = {
@@ -69,12 +69,15 @@ export class AppSearch {
     'CC BY': 'false',
     'CC BY-NC': 'false',
     'CC BY-SA': 'false',
+    'ODbL v1.0': 'false',
+
   }
   licenses = [
     {key: 'none', value: 'none', label: 'CC0'},
     {key: 'CC-BY', value: 'CC-BY', label: 'CC-BY'},
     {key: 'CC-BY-NC', value: 'CC-BY-NC', label: 'CC-BY-NC'},
     {key: 'CC-BY-SA', value: 'CC-BY-SA', label: 'CC-BY-SA'},
+    {key: 'ODbL v1.0', value: 'ODbL v1.0', label: 'ODbL v1.0'},
   ]
 
   date = {
@@ -384,7 +387,7 @@ export class AppSearch {
   }
 
   get portalTitle() {
-    return Object.entries(this.origin).filter(([_, v]) => v === 'true').map(([k]) => k).filter(Boolean).join('+') || null
+    return Object.entries(this.origin).filter(([_, v]) => (v === 'true' || v === true)).map(([k]) => k).filter(Boolean).join('+') || null
   }
   get typeTitle() {
     const aux = []

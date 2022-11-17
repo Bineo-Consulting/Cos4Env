@@ -1,34 +1,8 @@
 {
   "hosting": [{
     "public": "www",
-    "target": "cos4cloud",
+    "target": "cos4env",
     "cleanUrls": true,
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "/share{,/**}",
-        "function": "share"
-      },
-      {
-        "source": "/api{,/**}",
-        "function": "api"
-      },
-      {
-        "source": "/users{,/**}",
-        "function": "share"
-      },
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ]
-  }, {
-    "public": "www",
-    "target": "cos4cloud-2d9d3",
     "ignore": [
       "firebase.json",
       "**/.*",

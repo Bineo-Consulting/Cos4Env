@@ -70,20 +70,3 @@ export const types = () => [
     condition: true
   },
 ]
-
-
-// types = [
-//   'Odour type',
-//   'Odour intensity',
-//   'Hedonic tone',
-//   'PM1',
-//   'PM2.5',
-//   'PM10',
-//   'Temperature',
-//   'Humidity',
-//   'Pressure',
-//   'CO2',
-//   'CO2 Temperature',
-//   'CO2 Humidity',
-//   'Battery voltage',
-// ].map(i => ({key: i, value: i, label: i}))
