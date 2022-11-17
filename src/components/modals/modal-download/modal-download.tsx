@@ -14,6 +14,9 @@ export class ModalDownload {
     this.i18n = await fetchTranslations(this.i18n)
   }  
 
+  // species modeling
+  // systematic research / taxonomy
+  
   reasons = [
     'biosecurity management/planning',
     'citizen science',
@@ -24,8 +27,8 @@ export class ModalDownload {
     'environmental assessment',
     'restoration/remediation',
     'scientific research',
-    'systematic research/taxonomy',
-    'species modelling',
+    // 'systematic research/taxonomy',
+    // 'species modelling',
     'testing',
     'other'
   ]
@@ -33,7 +36,6 @@ export class ModalDownload {
   reason: any = {}
 
   onChange(e) {
-    console.log(e.detail)
     if (e.detail.checked) {
       this.reason[e.detail.value] = true
     } else {

@@ -26,7 +26,7 @@ const parseCommentsDwc = (items) => {
 
 const nov2021 = new Date('2021-11-22').getTime()
 const parseDwc = (item) => {
-  item.origin = item.origin || 'odourcollect,canairio'
+  item.origin = item.origin || 'odourcollect'
   item.id = `${item.id}`.includes('-') ? item.id : `${item.origin.toLowerCase()}-${item.id}`
 
   item.$$photos = (item.media || item.photos || item.observation_photos || [])
@@ -72,8 +72,10 @@ export class MappingService {
   static cache = JSON.parse(localStorage.cache || '{"time": 0}')
 
   static async get(params = null, cache = false) {
-    params.origin = params.origin || 'odourcollect,canairio'
-    params.per_page = params.per_page || 2e3;
+    params.origin = params.origin || 'odourcollect'
+    params.per_page = params.per_page || 250;
+    params.map = params.map || true;
+
     const queryParams = params ? toQueryString(params) : ''
 
     if (cache && this.cache && this.cache.last && this.cache.time > Date.now() - 9e4) {
@@ -229,8 +231,7 @@ export class MappingService {
 
   }
 
-  static addComment(p) {
-
+  static async addComment(p) {
     let error = false
     if (p.item && p.item.projects && p.item.projects.length) {
       error = !p.item.projects.includes(1252)
@@ -248,13 +249,29 @@ export class MappingService {
       body: p.comment || p.body || 'by Cos4Cloud'
     }
     const q = toQueryString(params)
-    // return fetch(`https://natusfera.gbif.es/observations/add_identification?${q}`)
-    return fetch(`${host}/comments${q}`, {
+    await fetch(`${host}/comments${q}`, {
       method: 'POST',
       headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        provider: 'cos4env'
       }
     })
+
+    const tempId = Date.now()
+    return {
+      _id: tempId,
+      id: tempId,
+      $$date: timeAgo(new Date()),
+      user_id: 1,
+      parent_id: p.parent_id,
+      taxon: p.taxon || undefined,
+      type: 'comment',
+      token: user.access_token,
+      sub: user.sub,
+      user: user,
+      body: p.comment || p.body,
+      comment: p.comment || p.body
+    }
   }
 
   static getComments(id: any, origin) {
@@ -276,7 +293,8 @@ export class MappingService {
     const data = await fetch(href, {
       headers: {
         sub: user.sub,
-        reason: reason || 'other'
+        reason: reason || 'other',
+        provider: 'cos4env'
       }
     }).then(res => res.text())
     downloadFile(data, `c4c_download_${Date.now()}.csv`)

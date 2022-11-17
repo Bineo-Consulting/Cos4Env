@@ -136,8 +136,8 @@ export class PageObservations {
   }
 
   async download(e) {
-    const t = false
-    if (t) return false
+    // const t = false
+    // if (t) return false
     const l = this.presentLoading()
     try {
       await MappingService.export(null, e.detail)
@@ -154,12 +154,6 @@ export class PageObservations {
           query={this.history.location.query}
           onSearch={(ev) => this.search(ev.detail, true)}></app-search>
         <app-download onDownload={(e) => this.download(e)}/>
-        {/*<app-grid
-          empty={this.state.empty ? this.i18n.no_results : ''}
-          onLoadmore={() => this.loadMore()}
-          show-spinner={this.loading}
-          items={this.items}
-          images={this.images}></app-grid>*/}
         <page-map
           items={this.items}
           interactions={true}>

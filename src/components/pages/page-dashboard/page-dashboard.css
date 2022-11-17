@@ -37,6 +37,7 @@ ion-title {
   position:  relative;
   min-height: 300px;
   margin-bottom: 60px;
+  margin-top: 60px;
 }
 .charts .ct-chart {
   max-width: 720px;
@@ -204,4 +205,7 @@ span.ct-label {
 }
 .ct-fill-donut-label {
   font-size: 12px;
+}
+.center {
+  text-align: center;
 }

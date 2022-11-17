@@ -61,7 +61,8 @@ export class PageUser {
     const url = resources.host + '/users/' + this.match.params.name
     fetch(url, {
       headers: {
-        sub: this.match.params.name
+        sub: this.match.params.name,
+        provider: 'cos4env'
       }
     })
     .then(res => res.json())

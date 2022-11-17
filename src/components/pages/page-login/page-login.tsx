@@ -31,7 +31,7 @@ export class PageLogin {
   }
 
   authenix() {
-    const clientId = 'a55d6976-a46c-3989-97a4-a958936b480a'
+    const clientId = 'da1a7d48-bca9-321b-dd04-ece7d7afc7b6'
     const redirect = encodeURIComponent(location.origin).replace(/\/$/, '')
     const path = location.pathname
     const url = `https://www.authenix.eu/oauth/authorize?response_type=token id_token&client_id=${clientId}&redirect_uri=${redirect}&state=${path}&nonce=123&prompt=select_account`

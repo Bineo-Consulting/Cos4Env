@@ -21,7 +21,7 @@ export class PageHome {
     this.i18n = await fetchTranslations(this.i18n)
 
     if (!(this.items && this.items.length)) {
-      MappingService.get({map: true})
+      MappingService.get({map: true, origin: 'odourcollect'})
       .then((res) => {
         this.items = res
       })

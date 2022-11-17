@@ -41,7 +41,11 @@ export class PageDashboard {
   }
 
   agg() {
-    fetch(resources.host + '/agg')
+    fetch(resources.host + '/agg', {
+      headers: {
+        provider: 'cos4env'
+      }
+    })
     .then(res => res.json())
     .then(res => {
       const call1 = (res) => {
@@ -60,7 +64,7 @@ export class PageDashboard {
       const call2 = (res) => {
         this.downloadsAgg = res
         this.setChartCounter({
-          el: this.charts.identificationsCountEl,
+          el: this.charts.downloads,
           count: res.downloads_count,
           title: 'Downloads'
         })
@@ -289,9 +293,11 @@ export class PageDashboard {
         <div class="dashboard-container">
           <ion-title><h2>Dashboard</h2></ion-title>
 
-          <span ref={(el) => this.charts.commentsCountEl = (el as HTMLElement)} class="ct-chart ct-chart-counter"></span>
-          <span ref={(el) => this.charts.identificationsCountEl = (el as HTMLElement)} class="ct-chart ct-chart-counter"></span>
-          <span ref={(el) => this.charts.usersCountEl = (el as HTMLElement)} class="ct-chart ct-chart-counter"></span>
+          <div class="center">
+            <span ref={(el) => this.charts.commentsCountEl = (el as HTMLElement)} class="ct-chart ct-chart-counter"></span>
+            <span ref={(el) => this.charts.downloads = (el as HTMLElement)} class="ct-chart ct-chart-counter"></span>
+            <span ref={(el) => this.charts.usersCountEl = (el as HTMLElement)} class="ct-chart ct-chart-counter"></span>
+          </div>
 
 
           <div class="charts">
