@@ -52,7 +52,6 @@ export class PageUser {
       item: this.user
     }
 
-    // present the modal
     document.body.appendChild(modalElement);
     await modalElement.present();
     await modalElement.onWillDismiss();
@@ -148,7 +147,6 @@ export class PageUser {
       }
     }
 
-    console.log({periods})
     this.setBar(periods[this.periodDownloads] || periods.p1Y)
   }
 
@@ -247,7 +245,6 @@ export class PageUser {
   async setBar({el, agg, labels}) {
     const Chartist = await import('chartist')
     const ChartistPluginLegend = (await import('chartist-plugin-legend')).default
-    // await import('chartist-plugin-legend')
 
     new Chartist.Bar(el, {
       labels,

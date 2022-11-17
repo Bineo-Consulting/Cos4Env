@@ -57,7 +57,7 @@ export class ModalShare {
     return encodeURIComponent(owner + desc.slice(0, 120) + elipsis)
   }
   get shareUrl() {
-    return 'https://cos4bio.eu/users/' + this.item.sub
+    return 'https://cos4env.eu/users/' + this.item.sub
   }
   get shareTwitter() {
     return `https://twitter.com/share?url=${this.shareUrl}&text=${this.titleShare}&via=Cos4Bio`
