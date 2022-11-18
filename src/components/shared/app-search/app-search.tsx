@@ -1,5 +1,4 @@
 import { Component, Event, EventEmitter, Host, Prop, h, State } from '@stencil/core';
-import { GbifService } from '../../../services/gbif.service';
 import { PlacesService } from '../../../services/places.service';
 import { fetchTranslations } from '../../../utils/translation';
 import { types as odourTypes } from '../../../services/odourcollect.service';
@@ -585,8 +584,7 @@ export class AppSearch {
                 placeholder={this.i18n.filters.search}
                 onChoose={(e) => this.onSearchSelect(e)}
                 onSearchValue={(e) => this.onSearchValue(e)}
-                service={GbifService}
-                service2={PlacesService}></app-searchbar>
+                service={PlacesService}></app-searchbar>
 
               <div class="float-chips-wrappers">
                 {this.specie && <ion-chip>

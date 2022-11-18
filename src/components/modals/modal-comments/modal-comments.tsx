@@ -63,10 +63,11 @@ export class ModalComments {
       const item = await MappingService.addComment({
         parent_id: this.id || this.item.id,
         comment: this.body,
+        body: this.body,
         taxon: this.specie,
         item: this.item
       })
-      // this.componentWillLoad()
+
       if (this.callback) {
         this.body = ''
         this.callback(this, item)

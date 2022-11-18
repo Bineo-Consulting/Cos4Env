@@ -76,7 +76,7 @@ export class PageUser {
       this.setChartCounter({
         el: this.charts.commentsCountEl,
         count: (res.comments_count || 0) + (res.identifications_count || 0),
-        title: `Comments &<br> Identifications`
+        title: this.i18n.profile.comments
       })
       this.setPeriodComments(this.periodComments)
       this.setPie({
@@ -218,7 +218,7 @@ export class PageUser {
 
   async setPie({el, agg}) {
     const Chartist = await import('chartist')
-    const ChartistPluginLegend = (await import('chartist-plugin-legend')).default
+    // const ChartistPluginLegend = (await import('chartist-plugin-legend')).default
     //const chartistPluginTooltip = (await import ('chartist-plugin-tooltip')).default
     const total = agg.map(i => i.count).reduce((a, b) => b + a, 0)
 
@@ -231,11 +231,7 @@ export class PageUser {
       donutSolid: true,
       startAngle: 270,
       showLabel: true,
-      plugins: [
-        ChartistPluginLegend({
-          legendNames: agg.map(i => (i._id || 'Other'))
-        }),
-      ],
+      plugins: null,
       labelInterpolationFnc: function(value) {
         return Math.round(value / total * 100) + '%';
       }
@@ -244,7 +240,7 @@ export class PageUser {
 
   async setBar({el, agg, labels}) {
     const Chartist = await import('chartist')
-    const ChartistPluginLegend = (await import('chartist-plugin-legend')).default
+    // const ChartistPluginLegend = (await import('chartist-plugin-legend')).default
 
     new Chartist.Bar(el, {
       labels,
@@ -257,11 +253,7 @@ export class PageUser {
         onlyInteger: true,
         offset: 20
       },
-      plugins: [
-        ChartistPluginLegend({
-          legendNames: ['Comments', 'Identifications']
-        })
-      ]
+      plugins: null
     }, [
       ['screen and (max-width: 640px)', {
         seriesBarDistance: 5,

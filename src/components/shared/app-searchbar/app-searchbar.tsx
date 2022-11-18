@@ -24,10 +24,9 @@ export class AppSearchbar {
   @Event() searchValue: EventEmitter<any>;
 
   @State() items = []
-  @State() itemsCache = JSON.parse(localStorage.search || '[]')
+  @State() itemsCache = JSON.parse(localStorage.search || '[]').filter(i => i.lat)
 
   async onInput(ev) {
-    console.log({onInput:(ev)})
     const term = ev.detail.value || ''
     if (term) {
       if (this.service2) {
