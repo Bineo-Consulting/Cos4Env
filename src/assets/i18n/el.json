@@ -65,9 +65,9 @@
     "email-noti": "Hλεκτρονικό ταχυδρομείο (για ειδοποιήσεις)"
   },
   "stats": {
-    "comments_identi": "Σχόλια & αναγνωρίσεις",
+    "comments_identi": "Σχόλια",
     "all": "Όλα",
-    "comm_id_by_portal": "% Σχόλια και αναγνωρίσεις μέσω της Πύλης",
+    "comm_id_by_portal": "% Σχόλια μέσω της Πύλης",
     "downloads": "Λήψη",
     "downloads_reasons": "% Λόγοι λήψης"
   },

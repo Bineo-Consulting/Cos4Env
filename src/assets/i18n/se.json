@@ -65,9 +65,9 @@
     "email-noti": "E-post (för aviseringar)"
   },
   "stats": {
-    "comments_identi": "Kommentarer och bestämningar",
+    "comments_identi": "Kommentarer",
     "all": "Alla",
-    "comm_id_by_portal": "% Kommentarer och bestämningar efter Portal",
+    "comm_id_by_portal": "% Kommentarer efter Portal",
     "downloads": "Ladda ned",
     "downloads_reasons": "% Nedladdningsskäl"
   },

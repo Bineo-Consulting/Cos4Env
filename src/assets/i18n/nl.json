@@ -65,9 +65,9 @@
     "email-noti": "E-mail (voor meldingen)"
   },
   "stats": {
-    "comments_identi": "Opmerkingen en identificaties",
+    "comments_identi": "Opmerkingen",
     "all": "allemaal",
-    "comm_id_by_portal": "% Opmerkingen en identificaties per portaal",
+    "comm_id_by_portal": "% Opmerkingen per portaal",
     "downloads": "downloaden",
     "downloads_reasons": "% Redenen downloaden"
   },

@@ -65,9 +65,9 @@
     "email-noti": "Email (for notifications)"
   },
   "stats":{
-    "comments_identi": "Comments and Identifications",
+    "comments_identi": "Comments",
     "all": "All",
-    "comm_id_by_portal": "% Comments & Identifications by Portal",
+    "comm_id_by_portal": "% Comments by Portal",
     "downloads": "Download",
     "downloads_reasons": "% Download reasons"
   },

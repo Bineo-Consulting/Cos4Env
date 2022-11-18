@@ -64,9 +64,9 @@
     "email-noti": "Correu electrònic (per a notificacions)"
   },
   "stats": {
-    "comments_identi": "Comentaris i Identificacions",
+    "comments_identi": "Comentaris",
     "all": "Tots",
-    "comm_id_by_portal": "% Cometaris i Identificacions per Portal",
+    "comm_id_by_portal": "% Cometaris per Portal",
     "downloads": "Descarregar",
     "downloads_reasons": "Motius de la descarrega"
   },
