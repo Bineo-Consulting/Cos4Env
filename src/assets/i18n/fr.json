@@ -12,7 +12,7 @@
   "no_results": "Aucun résultat.",
   "alert": "Alerte.",
   "errorSearch": "Erreur de recherche.",
-  "selectSpeciePlace": "Vous devez sélectionner \"lieu\" ou \"espèce\" de la liste.",  
+  "selectSpeciePlace": "Vous devez sélectionner \"lieu\" de la liste.",  
   "menu": {
     "logout": "Déconnexion",
     "settings": "Réglages",

@@ -12,7 +12,7 @@
   "no_results": "Keine Ergebnisse",
   "alert": "Alarm",
   "errorSearch": "Suchfehler",
-  "selectSpeciePlace": "Sie müssen \"Ort\" oder \"Art\" aus der Liste auswählen",    
+  "selectSpeciePlace": "Sie müssen \"Ort\" aus der Liste auswählen",    
   "menu": {
     "logout": "Abmelden",
     "settings": "Einstellungen",
